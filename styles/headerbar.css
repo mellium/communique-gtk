@@ -1,0 +1,65 @@
+@define-color color_primary #259b24;
+@define-color color_primary_dark #0a7e07;
+@define-color color_accent #0091ea;
+@define-color color_text #fafafa;
+
+GtkHeaderBar, GtkHeaderBar GtkButtonBox {
+	background: @color_primary;
+	border-color: @color_primary;
+	box-shadow: none;
+	color: @color_text;
+}
+
+GtkHeaderBar GtkButton {
+	background: @color_primary;
+	border-color: @color_primary;
+	box-shadow: none;
+	color: @color_text;
+	text-shadow: none;
+}
+
+GtkHeaderBar GtkButton:hover {
+	background: @color_accent;
+}
+
+GtkHeaderBar GtkButton:hover:active {
+	background: @color_primary_dark;
+}
+
+GtkHeaderBar GtkRadioButton {
+	background: @color_accent;
+	border-color: @color_accent;
+	box-shadow: none;
+	color: @color_text;
+	text-shadow: none;
+}
+
+GtkHeaderBar GtkRadioButton {
+	border-color: @color_primary;
+}
+
+GtkHeaderBar GtkRadioButton:focused {
+	background: @color_primary;
+	border-color: @color_accent;
+}
+
+.titlebutton, .logobutton {
+	icon-shadow: none;
+}
+
+GtkHeaderBar GtkButton.primary {
+	background-color: @color_accent;
+	font-weight: bold;
+	border-radius: 0.5em;
+}
+
+GtkHeaderBar GtkButton.primary:hover {
+	background-color: @color_primary_dark;
+}
+
+GtkSearchEntry {
+	background: @color_primary_dark;
+	border: none;
+	box-shadow: none;
+	color: @color_text;
+}
