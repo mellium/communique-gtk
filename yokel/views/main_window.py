@@ -21,7 +21,8 @@ class MainWindow(Gtk.Builder):
 
         header_bar = self.get_object('header_bar')
         header_bar.set_show_close_button(True)
-        header_bar.override_color(StateFlags.NORMAL | StateFlags.ACTIVE, Gdk.RGBA(red=0, green=0, blue=1, alpha=1))
+        header_bar.override_color(StateFlags.NORMAL | StateFlags.ACTIVE,
+                                  Gdk.RGBA(red=0, green=0, blue=1, alpha=1))
 
         window = self.get_object('main_window')
         window.set_titlebar(header_bar)
@@ -35,13 +36,19 @@ class MainWindow(Gtk.Builder):
         self.mainview = self.get_object('main_view')
         self.mainbox = self.get_object('main_view_box')
 
-        if not self.using_system_theme:
+        if not self.using_system_theme and 'theme' in config:
             style_provider = Gtk.CssProvider.new()
-            style_provider.load_from_path('styles/headerbar.css')
+            style_provider.load_from_path(
+                'styles/{}.css'.format(config['theme'])
+            )
 
             display = Gdk.Display.get_default()
             screen = display.get_default_screen()
-            StyleContext.add_provider_for_screen(screen, style_provider, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
+            StyleContext.add_provider_for_screen(
+                screen,
+                style_provider,
+                Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+            )
 
         window.show_all()
 
