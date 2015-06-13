@@ -51,6 +51,3 @@ class MainWindow(Gtk.Builder):
             )
 
         window.show_all()
-
-        # Start the main GTK loop
-        Gtk.main()
