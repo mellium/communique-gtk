@@ -4,7 +4,7 @@ BIN=$(VENV)/bin
 ACTIVATE=source $(BIN)/activate
 
 .PHONY: all
-all: test build pre-commit
+all: test build
 
 .PHONY: pre-commit
 pre-commit: .git/hooks/pre-commit
@@ -21,11 +21,11 @@ $(VENV)/bin/activate: requirements.txt requirements-dev.txt
 
 
 .PHONY: test
-test: $(VENV)
+test: $(VENV) pre-commit
 	$(ACTIVATE); tox $(REBUILD_FLAG)
 
 .PHONY: build
-build: pre-commit
+build: $(VENV)
 
 .PHONY: run
 run: build $(VENV)
