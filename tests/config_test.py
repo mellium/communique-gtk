@@ -16,10 +16,10 @@ def config():
 
 def test_default_file(config):
     """
-    The default config file should be called 'config.yml' (no matter where it's
+    The default config file should be called 'yokelrc' (no matter where it's
     stored).
     """
-    assert config.path.endswith('config.yml')
+    assert config.path.endswith('yokelrc')
 
 
 def test_create_config(tmpdir):
@@ -28,7 +28,7 @@ def test_create_config(tmpdir):
     flushing should write the file, and loading should actually load in the
     data from the file.
     """
-    config = Config(path="{}/config.yaml".format(tmpdir.realpath().strpath))
+    config = Config(path="{}/yokelrc".format(tmpdir.realpath().strpath))
     assert config.exists() is False
     config['mikado'] = 'Short, sharp, shock'
     config.flush()

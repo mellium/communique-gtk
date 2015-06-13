@@ -1,9 +1,8 @@
 import appdirs
 import os
+import toml
 
 from collections import UserDict
-
-import yaml
 
 
 class Config(UserDict):
@@ -16,7 +15,7 @@ class Config(UserDict):
         else:
             self.path = os.path.join(
                 appdirs.user_config_dir('yokel', 'com.samwhited'),
-                'config.yml'
+                'yokelrc'
             )
         try:
             os.mkdir(os.path.dirname(self.path))
@@ -27,14 +26,11 @@ class Config(UserDict):
     def load(self):
         if os.path.isfile(self.path):
             with open(self.path, 'r') as config_file:
-                self.update(yaml.load(config_file))
-                # try:
-                # except:
-                #     pass
+                self.update(toml.loads(config_file.read()))
 
     def flush(self):
         with open(self.path, 'w+') as config_file:
-            yaml.dump(self.data, config_file, default_flow_style=False)
+            toml.dump(self.data, config_file)
 
     def exists(self):
         return os.path.exists(self.path)
