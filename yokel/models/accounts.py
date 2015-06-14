@@ -27,6 +27,13 @@ class AccountManager(Gtk.ListStore):
         return [account for account in self.accounts if 'enabled' in account
                 and account['enabled'] is True]
 
+    @property
+    def config(self):
+        """
+        Return the updated account config.
+        """
+        return [account.config for account in self.accounts]
+
 
 class Account(ClientXMPP):
 

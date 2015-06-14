@@ -25,4 +25,5 @@ GObject.threads_init()
 MainWindow(config, app_state)
 
 Gtk.main()
+config['account'] = app_state['accounts'].config
 config.flush()
