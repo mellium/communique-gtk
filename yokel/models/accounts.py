@@ -1,4 +1,5 @@
 from gi.repository import Gtk
+from yokel import log
 from sleekxmpp import ClientXMPP
 
 
@@ -57,6 +58,11 @@ class Account(ClientXMPP):
         """
         Connect to the XMPP server using the provided config.
         """
+        log.info('Connecting to {} using {}'.format(
+            self.config['jid'],
+            self.config['address'] == () and 'the default address'
+            or self.config['address']
+        ))
         super().connect(
             address=self.config['address'],
             reattempt=self.config['reattempt'],
@@ -68,6 +74,11 @@ class Account(ClientXMPP):
         """
         Enable or disable the account.
         """
+        log.info('Received account {} signal for {}'.format(
+            value and 'enable' or 'disable',
+            self.config['jid']
+        ))
         self.config['enabled'] = value
+
         if value:
             self.connect()
