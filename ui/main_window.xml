@@ -75,12 +75,6 @@
 			<object class="GtkBox" id="main_view_box">
 				<property name="orientation">vertical</property>
 				<property name="homogeneous">True</property>
-				<child>
-					<object class="GtkScrolledWindow" id="main_view">
-						<property name="visible">True</property>
-						<property name="expand">True</property>
-					</object>
-				</child>
 			</object>
 		</child>
 	</object>

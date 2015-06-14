@@ -1,21 +1,35 @@
 from gi.repository import Gdk, GLib, Gtk
 from gi.repository.Gtk import StateFlags, StyleContext
 
-appname = "Yokel"
-appauthor = "Sam Whited"
+from yokel import appname
+from yokel.views.accounts import AccountsView
 
 
 class MainWindow(Gtk.Builder):
 
-    def __init__(self, config):
+    """
+    The main window of the app. Controls creation of the presenters and handing
+    them application state. This should probably be separated somehow.
+
+    Args:
+        config (dict): The global config object.
+    """
+
+    def __init__(self, config, app_state):
         super().__init__()
+
+        self.config = config
+        self.app_state = app_state
+
+        self.primary_view = None
 
         self.using_system_theme = 'use_system_theme' in config and config[
             'use_system_theme'] is True
 
         settings = Gtk.Settings.get_default()
-        if (self.using_system_theme and config['dark_theme'] is True):
-            settings.set_property('gtk-application-prefer-dark-theme', True)
+        if self.using_system_theme:
+            settings.set_property('gtk-application-prefer-dark-theme',
+                                  config['dark_theme'])
 
         self.add_from_file('ui/main_window.xml')
 
@@ -33,8 +47,8 @@ class MainWindow(Gtk.Builder):
         window.set_title(appname)
         window.set_default_size(1600, 900)
 
-        self.mainview = self.get_object('main_view')
         self.mainbox = self.get_object('main_view_box')
+        self.window = window
 
         if not self.using_system_theme and 'theme' in config:
             style_provider = Gtk.CssProvider.new()
@@ -50,4 +64,20 @@ class MainWindow(Gtk.Builder):
                 Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
             )
 
-        window.show_all()
+        self.accounts_view = AccountsView(self.app_state['accounts'])
+        if len(app_state['accounts']) == 0 or len(
+                app_state['accounts'].enabled_accounts) == 0:
+            self.view_accounts()
+
+    def view_accounts(self):
+        if type(self.primary_view) == AccountsView:
+            return
+
+        self.set_primary_view(self.accounts_view)
+
+    def set_primary_view(self, view):
+        if self.primary_view:
+            self.mainbox.remove(self.primary_view)
+        self.primary_view = view
+        self.mainbox.add(self.primary_view)
+        self.window.show_all()

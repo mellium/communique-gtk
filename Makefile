@@ -13,10 +13,9 @@ pre-commit: .git/hooks/pre-commit
 
 $(VENV): $(VENV)/bin/activate
 
-$(VENV)/bin/activate: requirements.txt requirements-dev.txt
+$(VENV)/bin/activate: requirements.txt
 	test -d $(VENV) || virtualenv -p /usr/bin/python3 --system-site-packages $(VENV)
 	$(ACTIVATE); pip install -r requirements.txt
-	$(ACTIVATE); pip install -r requirements-dev.txt
 	touch $(BIN)/activate
 
 
@@ -30,6 +29,10 @@ build: $(VENV)
 .PHONY: run
 run: build $(VENV)
 	$(ACTIVATE); python -m yokel
+
+.PHONY: debug
+debug: build $(VENV)
+	GTK_DEBUG=interactive $(ACTIVATE); python -m yokel
 
 .PHONY: clean
 clean:
