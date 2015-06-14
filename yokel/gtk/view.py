@@ -14,5 +14,6 @@ class View(Gtk.ScrolledWindow):
             'ui/{}.xml'.format(layout_name)
         )
         for gtkobj in self.builder.get_objects():
-            self.add(gtkobj)
+            if gtkobj.get_parent() is None:
+                self.add(gtkobj)
         self.set_property('expand', True)

@@ -67,8 +67,6 @@
 					</object>
 					<packing>
 						<property name="pack-type">end</property>
-						<property name="expand">False</property>
-						<property name="fill">True</property>
 					</packing>
 				</child>
 			</object>
