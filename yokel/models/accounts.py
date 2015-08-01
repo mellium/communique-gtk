@@ -1,6 +1,6 @@
 from gi.repository import Gtk
 from yokel import log
-from sleekxmpp import ClientXMPP
+from slixmpp import ClientXMPP
 
 
 class AccountManager(Gtk.ListStore):
@@ -49,10 +49,7 @@ class Account(ClientXMPP):
 
     def __init__(self, config, password=None):
         self.config = {
-            'address': (),
-            'reattempt': True,
-            'tls': True,
-            'ssl': False
+            'enabled': False
         }
         self.config.update(config)
 
@@ -65,16 +62,11 @@ class Account(ClientXMPP):
         """
         Connect to the XMPP server using the provided config.
         """
-        log.info('Connecting to {} using {}'.format(
-            self.config['jid'],
-            self.config['address'] == () and 'the default address'
-            or self.config['address']
+        log.info('Connecting to {}'.format(
+            self.config['jid']
         ))
         super().connect(
-            address=self.config['address'],
-            reattempt=self.config['reattempt'],
-            use_tls=self.config['tls'],
-            use_ssl=self.config['ssl']
+            force_starttls=True,
         )
 
     def enable_signal(self, button, value):

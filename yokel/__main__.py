@@ -1,4 +1,7 @@
+import asyncio
 import signal
+import sys
+import threading
 
 from gi.repository import Gtk, GObject
 
@@ -19,11 +22,24 @@ app_state = {
     'accounts': AccountManager(config['account']),
 }
 
-# Unnecessary for PyGObject 3.10.2+
-GObject.threads_init()
+try:
+    loop = asyncio.get_event_loop()
 
-MainWindow(config, app_state)
+    # Unnecessary for PyGObject 3.10.2+
+    GObject.threads_init()
 
-Gtk.main()
-config['account'] = app_state['accounts'].config
-config.flush()
+    MainWindow(config, app_state)
+
+    def start_ui(loop=loop):
+        Gtk.main()
+        loop.call_soon_threadsafe(loop.stop)
+        sys.exit(0)
+
+    thread = threading.Thread(target=start_ui)
+    thread.start()
+
+    loop.run_forever()
+finally:
+    loop.close()
+    config['account'] = app_state['accounts'].config
+    config.flush()

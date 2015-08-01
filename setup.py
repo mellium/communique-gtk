@@ -12,7 +12,7 @@ setup(
     packages=['yokel'],
     require=[
         'appdirs',
-        'sleekxmpp',
+        'slixmpp',
         'toml'
     ],
     tests_require=[
