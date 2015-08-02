@@ -22,6 +22,5 @@ log.setLevel(logging.DEBUG)
 try:
     from systemd.journal import JournalHandler
     log.addHandler(JournalHandler(SYSLOG_IDENTIFIER=__name__))
-except:
-    # journald is not available on this system.
-    pass
+except ImportError:
+    print('Journald is not available on this system.')

@@ -3,6 +3,7 @@ from gi.repository.Gtk import StateFlags, StyleContext
 
 from yokel import appname
 from yokel.views.accounts import AccountsView
+from yokel.views.chat import ChatView
 
 
 class MainWindow(Gtk.Builder):
@@ -65,17 +66,36 @@ class MainWindow(Gtk.Builder):
             )
 
         self.accounts_view = AccountsView(self.app_state['accounts'])
+        self.chat_view = ChatView(self.app_state['accounts'])
         if len(app_state['accounts']) == 0 or len(
-                app_state['accounts'].enabled_accounts) == 0:
+                app_state['accounts'].enabled) == 0:
             self.view_accounts()
+        else:
+            self.view_accounts()
+            # self.view_chat()
 
     def view_accounts(self):
+        """
+        Loads the accounts view in the window.
+        """
         if type(self.primary_view) == AccountsView:
             return
 
         self.set_primary_view(self.accounts_view)
 
+    def view_chat(self):
+        """
+        Loads the chat view in the window.
+        """
+        if type(self.primary_view) == ChatView:
+            return
+
+        self.set_primary_view(self.chat_view)
+
     def set_primary_view(self, view):
+        """
+        Sets the primary view of the window.
+        """
         if self.primary_view:
             self.mainbox.remove(self.primary_view)
         self.primary_view = view

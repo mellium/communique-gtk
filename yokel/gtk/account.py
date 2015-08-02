@@ -20,8 +20,8 @@ class Account(Gtk.ListBoxRow):
 
         # close_button = Gtk.Button.new_with_label("×")
         enable_switch = Gtk.Switch.new()
-        enable_switch.set_active('enabled' in config and config['enabled'])
         enable_switch.connect('state-set', account.enable_signal)
+        enable_switch.set_active(config['enabled'])
 
         box.pack_start(jid, False, True, self.padding)
         box.pack_end(enable_switch, False, True, self.padding)

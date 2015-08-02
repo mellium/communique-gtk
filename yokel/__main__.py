@@ -1,9 +1,8 @@
 import asyncio
 import signal
 import sys
-import threading
 
-from gi.repository import Gtk, GObject
+from gi.repository import Gdk, Gtk, GObject
 
 from yokel.config import Config
 from yokel.models.accounts import AccountManager
@@ -23,23 +22,19 @@ app_state = {
 }
 
 try:
-    loop = asyncio.get_event_loop()
-
     # Unnecessary for PyGObject 3.10.2+
     GObject.threads_init()
 
     MainWindow(config, app_state)
 
-    def start_ui(loop=loop):
-        Gtk.main()
-        loop.call_soon_threadsafe(loop.stop)
-        sys.exit(0)
-
-    thread = threading.Thread(target=start_ui)
-    thread.start()
-
-    loop.run_forever()
+    Gdk.threads_init()
+    ui_loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(ui_loop)
+    ui_loop.run_in_executor(None, None)
+    Gtk.main()
+    Gdk.threads_leave()
 finally:
-    loop.close()
+    # ui_loop.call_soon(ui_loop.stop)
+    # ui_loop.call_soon(ui_loop.close)
     config['account'] = app_state['accounts'].config
     config.flush()
