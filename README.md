@@ -11,5 +11,5 @@ The following are the guiding principles of Yokel in order of highest to lowest
 priority:
 
   - Security
-  - Intuative and simple user experience
+  - Intuitive and simple user experience
   - Privacy
