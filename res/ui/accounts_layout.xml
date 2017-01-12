@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+	<!-- interface-requires gtk+ 3.0 -->
+	<object class="GtkBox">
+		<child>
+			<object class="GtkListBox" id="accounts_list">
+				<property name="expand">True</property>
+			</object>
+		</child>
+	</object>
+</interface>
+

@@ -1,0 +1,23 @@
+[package]
+name = "yokel"
+version = "0.1.0"
+authors = ["Sam Whited <sam@samwhited.com>"]
+build = "build.rs"
+
+[build-dependencies]
+serde_codegen = "0.8.22"
+
+[dependencies]
+serde = "0.8.22"
+
+[dependencies.toml]
+version = "0.2.1"
+features = ["serde"]
+default-features = false
+
+[dependencies.gtk]
+version = "0.1.1"
+features = ["v3_16"]
+
+[dependencies.gdk]
+version = "0.5.1"
