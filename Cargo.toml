@@ -2,6 +2,12 @@
 name = "yokel"
 version = "0.1.0"
 authors = ["Sam Whited <sam@samwhited.com>"]
+license = "BSD-2-Clause"
+description = "A modern XMPP client with a GTK3+ UI."
+homepage = "https://mellium.im"
+repository = "https://bitbucket.org/mellium/yokel.git"
+readme = "README.md"
+keywords = ["chat", "xmpp", "jabber"]
 build = "build.rs"
 
 [build-dependencies]
