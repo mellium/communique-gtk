@@ -1,133 +1,165 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.20.0 -->
+<!-- Generated with glade 3.20.0
+
+Copyright (c) Copyright © 2017 The Yokel Authors
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this
+   list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice,
+   this list of conditions and the following disclaimer in the documentation
+   and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR
+ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+Author: Sam Whited
+
+-->
 <interface>
-  <requires lib="gtk+" version="3.16"/>
-  <object class="GtkBox" id="login_box">
-    <property name="can_focus">False</property>
-    <child>
-      <object class="GtkFrame">
-        <property name="visible">True</property>
-        <property name="can_focus">False</property>
-        <property name="label_xalign">0</property>
-        <property name="shadow_type">none</property>
-        <child>
-          <object class="GtkAlignment">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <child>
-              <object class="GtkBox">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="halign">center</property>
-                <property name="valign">center</property>
-                <property name="orientation">vertical</property>
-                <property name="spacing">15</property>
-                <child>
-                  <object class="GtkImage">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="margin_bottom">25</property>
-                    <property name="pixel_size">100</property>
-                    <property name="icon_name">avatar-default-symbolic</property>
-                    <property name="icon_size">6</property>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkBox">
-                    <property name="can_focus">False</property>
-                    <property name="halign">center</property>
-                    <property name="valign">center</property>
-                    <property name="hexpand">True</property>
-                    <property name="vexpand">True</property>
-                    <property name="orientation">vertical</property>
-                    <property name="spacing">15</property>
-                    <property name="homogeneous">True</property>
-                    <child>
-                      <object class="GtkEntry" id="jid">
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="caps_lock_warning">False</property>
-                        <property name="placeholder_text" translatable="yes">user@example.com</property>
-                        <property name="input_purpose">email</property>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkEntry" id="password">
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="visibility">False</property>
-                        <property name="secondary_icon_name">channel-secure-symbolic</property>
-                        <property name="secondary_icon_activatable">False</property>
-                        <property name="secondary_icon_sensitive">False</property>
-                        <property name="placeholder_text" translatable="yes">Password</property>
-                        <property name="input_purpose">password</property>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkBox">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="spacing">15</property>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <object class="GtkMenuToolButton">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">True</property>
-                            <property name="is_important">True</property>
-                            <property name="label">Connect</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="fill">True</property>
-                            <property name="pack_type">end</property>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                      </object>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="fill">True</property>
-                        <property name="position">2</property>
-                      </packing>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">1</property>
-                  </packing>
-                </child>
-              </object>
-            </child>
-          </object>
-        </child>
-        <child type="label_item">
-          <placeholder/>
-        </child>
-      </object>
-      <packing>
-        <property name="expand">True</property>
-        <property name="fill">True</property>
-        <property name="position">0</property>
-      </packing>
-    </child>
-  </object>
+	<requires lib="gtk+" version="3.16"/>
+	<!-- interface-requires gtk+ 3.16 -->
+	<!-- interface-license-type bsd2c -->
+	<!-- interface-name yokel -->
+	<!-- interface-copyright Copyright \302\251 2017 The Yokel Authors -->
+	<!-- interface-authors Sam Whited -->
+	<object class="GtkBox" id="login_box">
+		<property name="can_focus">False</property>
+		<child>
+			<object class="GtkFrame">
+				<property name="visible">True</property>
+				<property name="can_focus">False</property>
+				<property name="label_xalign">0</property>
+				<property name="shadow_type">none</property>
+				<child>
+					<object class="GtkAlignment">
+						<property name="visible">True</property>
+						<property name="can_focus">False</property>
+						<child>
+							<object class="GtkBox">
+								<property name="visible">True</property>
+								<property name="can_focus">False</property>
+								<property name="halign">center</property>
+								<property name="valign">center</property>
+								<property name="orientation">vertical</property>
+								<property name="spacing">15</property>
+								<child>
+									<object class="GtkImage">
+										<property name="visible">True</property>
+										<property name="can_focus">False</property>
+										<property name="margin_bottom">25</property>
+										<property name="pixel_size">100</property>
+										<property name="icon_name">user-available</property>
+										<property name="icon_size">6</property>
+									</object>
+									<packing>
+										<property name="expand">False</property>
+										<property name="fill">True</property>
+										<property name="position">0</property>
+									</packing>
+								</child>
+								<child>
+									<object class="GtkBox">
+										<property name="can_focus">False</property>
+										<property name="halign">center</property>
+										<property name="valign">center</property>
+										<property name="hexpand">True</property>
+										<property name="vexpand">True</property>
+										<property name="orientation">vertical</property>
+										<property name="spacing">15</property>
+										<property name="homogeneous">True</property>
+										<child>
+											<object class="GtkEntry" id="jid">
+												<property name="visible">True</property>
+												<property name="can_focus">True</property>
+												<property name="caps_lock_warning">False</property>
+												<property name="placeholder_text" translatable="yes">user@example.com</property>
+												<property name="input_purpose">email</property>
+											</object>
+											<packing>
+												<property name="expand">False</property>
+												<property name="fill">True</property>
+												<property name="position">0</property>
+											</packing>
+										</child>
+										<child>
+											<object class="GtkEntry" id="password">
+												<property name="visible">True</property>
+												<property name="can_focus">True</property>
+												<property name="visibility">False</property>
+												<property name="secondary_icon_name">channel-secure-symbolic</property>
+												<property name="secondary_icon_activatable">False</property>
+												<property name="secondary_icon_sensitive">False</property>
+												<property name="placeholder_text" translatable="yes">Password</property>
+												<property name="input_purpose">password</property>
+											</object>
+											<packing>
+												<property name="expand">False</property>
+												<property name="fill">True</property>
+												<property name="position">1</property>
+											</packing>
+										</child>
+										<child>
+											<object class="GtkBox">
+												<property name="visible">True</property>
+												<property name="can_focus">False</property>
+												<property name="spacing">15</property>
+												<child>
+													<placeholder/>
+												</child>
+												<child>
+													<object class="GtkMenuToolButton">
+														<property name="visible">True</property>
+														<property name="can_focus">True</property>
+														<property name="receives_default">True</property>
+														<property name="is_important">True</property>
+														<property name="label">Connect</property>
+													</object>
+													<packing>
+														<property name="expand">False</property>
+														<property name="fill">True</property>
+														<property name="pack_type">end</property>
+														<property name="position">1</property>
+													</packing>
+												</child>
+											</object>
+											<packing>
+												<property name="expand">False</property>
+												<property name="fill">True</property>
+												<property name="position">2</property>
+											</packing>
+										</child>
+									</object>
+									<packing>
+										<property name="expand">False</property>
+										<property name="fill">True</property>
+										<property name="position">1</property>
+									</packing>
+								</child>
+							</object>
+						</child>
+					</object>
+				</child>
+				<child type="label_item">
+					<placeholder/>
+				</child>
+			</object>
+			<packing>
+				<property name="expand">True</property>
+				<property name="fill">True</property>
+				<property name="position">0</property>
+			</packing>
+		</child>
+	</object>
 </interface>
