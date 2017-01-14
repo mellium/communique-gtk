@@ -6,6 +6,7 @@ use std::path::PathBuf;
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Config {
     theme: String,
+    #[serde(rename = "account")]
     accounts: Vec<Account>,
 }
 

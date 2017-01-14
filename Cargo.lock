@@ -3,6 +3,7 @@ name = "yokel"
 version = "0.1.0"
 dependencies = [
  "gdk 0.5.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "gio 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "gtk 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde 0.8.22 (registry+https://github.com/rust-lang/crates.io-index)",
  "serde_codegen 0.8.22 (registry+https://github.com/rust-lang/crates.io-index)",
