@@ -23,6 +23,7 @@ fn main() {
     let builder = gtk::Builder::new_from_string(res::UI_MAIN_WINDOW);
 
     let app = gtk::Application::new(Some(res::APP_ID), gio::APPLICATION_FLAGS_NONE).unwrap();
+
     // TODO: app.register and then move things to the startup handler.
     // app.connect_startup(move |app| {
     let window = builder.get_object::<gtk::ApplicationWindow>("main_window").unwrap();
