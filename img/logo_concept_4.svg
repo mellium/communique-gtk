@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="210mm"
+   height="148mm"
+   viewBox="0 0 210 148"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.0 r"
+   sodipodi:docname="logo_concept_4.svg"
+   inkscape:export-filename="/home/sam/Projects/yokel/logo_concept_2.png"
+   inkscape:export-xdpi="54.259998"
+   inkscape:export-ydpi="54.259998">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="470.74871"
+     inkscape:cy="297.18595"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1916"
+     inkscape:window-height="1000"
+     inkscape:window-x="0"
+     inkscape:window-y="59"
+     inkscape:window-maximized="0"
+     inkscape:pagecheckerboard="false" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-149)"
+     style="display:inline">
+    <ellipse
+       style="opacity:1;fill:#ef2929;fill-opacity:1;stroke:none;stroke-width:0.59311253;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:44;stroke-opacity:0.50196078"
+       id="path26"
+       cx="56.75"
+       cy="222.81039"
+       rx="3.75"
+       ry="5.6754246" />
+    <flowRoot
+       xml:space="preserve"
+       id="flowRoot18"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:85.33333588px;line-height:25px;font-family:'Circular Pro Medium';-inkscape-font-specification:'Circular Pro Medium, ';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       transform="matrix(0.26458333,0,0,0.26458333,14.838419,142.89979)"><flowRegion
+         id="flowRegion20"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:85.33333588px;font-family:'Circular Pro Medium';-inkscape-font-specification:'Circular Pro Medium, ';letter-spacing:0px;word-spacing:0px"><rect
+           id="rect22"
+           width="831.42859"
+           height="1122.8572"
+           x="85.714287"
+           y="285.37683"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:85.33333588px;font-family:'Circular Pro Medium';-inkscape-font-specification:'Circular Pro Medium, ';letter-spacing:0px;word-spacing:0px" /></flowRegion><flowPara
+         id="flowPara24"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:85.33333588px;font-family:Raleway;-inkscape-font-specification:Raleway;letter-spacing:0px;word-spacing:0px">communiqué</flowPara></flowRoot>  </g>
+</svg>
