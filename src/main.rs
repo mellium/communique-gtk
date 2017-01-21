@@ -19,10 +19,29 @@ mod config;
 
 
 fn main() {
-
     gtk::init().expect("Failed to initialize GTK");
 
     let builder = gtk::Builder::new_from_string(res::UI_MAIN_WINDOW);
+
+    let config = config::load_config();
+    if config.accounts.len() == 0 {
+        let mainbox = builder.get_object::<gtk::Box>("main_view_box").unwrap();
+        let login_builder = gtk::Builder::new_from_string(res::UI_LOGIN);
+        if let Some(login_box) = login_builder.get_object::<gtk::Box>("login_box") {
+            mainbox.add(&login_box);
+        }
+    }
+
+    // TODO: Why doesn't this work?
+    if config.theme != "system_dark" && config.theme != "system_light" {
+        let style_provider = gtk::CssProvider::new();
+        style_provider.load_from_data(res::STYLE_CONVERSATIONS).unwrap();
+        let display = gdk::Display::get_default().unwrap();
+        let screen = display.get_default_screen();
+        gtk::StyleContext::add_provider_for_screen(&screen,
+                                                   &style_provider,
+                                                   gtk::STYLE_PROVIDER_PRIORITY_APPLICATION);
+    }
 
     let app = gtk::Application::new(Some(res::APP_ID), gio::APPLICATION_FLAGS_NONE).unwrap();
 
@@ -37,16 +56,6 @@ fn main() {
         Inhibit(false)
     });
     app.add_window(&window);
-
-    let config = config::load_config();
-    if config.accounts.len() == 0 {
-        if let Some(mainbox) = builder.get_object::<gtk::Box>("main_view_box") {
-            let login_builder = gtk::Builder::new_from_string(res::UI_LOGIN);
-            if let Some(login_box) = login_builder.get_object::<gtk::Box>("login_box") {
-                mainbox.add(&login_box);
-            }
-        }
-    }
 
     // TODO: Move this into startup event when register() is supported by gtk-rs.
     window.show_all();

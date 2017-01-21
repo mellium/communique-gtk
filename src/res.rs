@@ -10,4 +10,4 @@ pub const UI_LOGIN: &'static str = include_str!("../gtk/login_layout.xml");
 // pub const UI_ACCOUNTS_LAYOUT: &'static str = include_str!("../ui/accounts_layout.xml");
 // pub const UI_CHAT_LAYOUT: &'static str = include_str!("../ui/chat_layout.xml");
 
-// pub const STYLE_CONVERSATIONS: &'static str = include_str!("../styles/conversations.css");
+pub const STYLE_CONVERSATIONS: &'static str = include_str!("../styles/conversations.css");
