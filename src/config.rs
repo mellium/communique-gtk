@@ -1,20 +1,23 @@
-use std::io::prelude::*;
+extern crate toml;
+
 use std::env;
 use std::ffi::OsStr;
+use std::fs;
+use std::io::prelude::*;
 use std::path::PathBuf;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Config {
-    theme: String,
+    pub theme: String,
     #[serde(rename = "account")]
-    accounts: Vec<Account>,
+    pub accounts: Vec<Account>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-struct Account {
-    jid: String,
-    password: String,
-    enabled: bool,
+pub struct Account {
+    pub jid: String,
+    pub password: String,
+    pub enabled: bool,
 }
 
 pub fn load_config() -> Config {
@@ -38,7 +41,7 @@ pub fn load_config() -> Config {
     path.push("yokelrc");
 
     let mut s = String::new();
-    std::fs::File::open(path.into_os_string().to_str().unwrap())
+    fs::File::open(path.into_os_string().to_str().unwrap())
         .unwrap()
         .read_to_string(&mut s)
         .unwrap();

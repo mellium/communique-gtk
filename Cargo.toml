@@ -8,13 +8,10 @@ homepage = "https://mellium.im"
 repository = "https://bitbucket.org/mellium/yokel.git"
 readme = "README.md"
 keywords = ["chat", "xmpp", "jabber"]
-build = "build.rs"
-
-[build-dependencies]
-serde_codegen = "0.8.23"
 
 [dependencies]
 serde = "0.8.23"
+serde_derive = "0.8.23"
 
 [dependencies.toml]
 version = "0.2.1"

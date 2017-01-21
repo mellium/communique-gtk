@@ -4,17 +4,19 @@
 
 #![crate_type = "bin"]
 
-mod res;
-
-extern crate gdk;
-extern crate gio;
-extern crate serde;
-extern crate toml;
+#[macro_use]
+extern crate serde_derive;
 
 extern crate gtk;
 use gtk::prelude::*;
 
-include!(concat!(env!("OUT_DIR"), "/config.rs"));
+extern crate gdk;
+extern crate gio;
+extern crate toml;
+
+mod res;
+mod config;
+
 
 fn main() {
 
@@ -36,7 +38,7 @@ fn main() {
     });
     app.add_window(&window);
 
-    let config = load_config();
+    let config = config::load_config();
     if config.accounts.len() == 0 {
         if let Some(mainbox) = builder.get_object::<gtk::Box>("main_view_box") {
             let login_builder = gtk::Builder::new_from_string(res::UI_LOGIN);
