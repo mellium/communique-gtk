@@ -11,10 +11,10 @@ keywords = ["chat", "xmpp", "jabber"]
 build = "build.rs"
 
 [build-dependencies]
-serde_codegen = "0.8.22"
+serde_codegen = "0.8.23"
 
 [dependencies]
-serde = "0.8.22"
+serde = "0.8.23"
 
 [dependencies.toml]
 version = "0.2.1"
