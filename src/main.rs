@@ -5,6 +5,9 @@
 #![crate_type = "bin"]
 
 #[macro_use]
+extern crate lazy_static;
+
+#[macro_use]
 extern crate serde_derive;
 
 extern crate gtk;
@@ -12,11 +15,16 @@ use gtk::prelude::*;
 
 extern crate gdk;
 extern crate gio;
+extern crate glib;
+extern crate regex;
 extern crate toml;
 
 mod res;
 mod config;
+mod pane;
+mod login;
 
+use pane::Pane;
 
 fn main() {
     gtk::init().expect("Failed to initialize GTK");
@@ -26,10 +34,8 @@ fn main() {
     let config = config::load_config();
     if config.accounts.len() == 0 {
         let mainbox = builder.get_object::<gtk::Box>("main_view_box").unwrap();
-        let login_builder = gtk::Builder::new_from_string(res::UI_LOGIN);
-        if let Some(login_box) = login_builder.get_object::<gtk::Box>("login_box") {
-            mainbox.add(&login_box);
-        }
+        let login_pane = login::Login::<gtk::Box>::new().unwrap();
+        mainbox.add(&login_pane.get_widget());
     }
 
     // TODO: Why doesn't this work?

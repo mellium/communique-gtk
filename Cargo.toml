@@ -10,20 +10,19 @@ readme = "README.md"
 keywords = ["chat", "xmpp", "jabber"]
 
 [dependencies]
+gdk = "0.5.1"
+gio = "0.1.1"
+glib = "0.1.1"
+lazy_static = "0.2.2"
+regex = "0.2.1"
 serde = "0.8.23"
 serde_derive = "0.8.23"
-
-[dependencies.toml]
-version = "0.2.1"
-features = ["serde"]
-default-features = false
 
 [dependencies.gtk]
 version = "0.1.1"
 features = ["v3_16"]
 
-[dependencies.gdk]
-version = "0.5.1"
-
-[dependencies.gio]
-version = "0.1.1"
+[dependencies.toml]
+version = "0.2.1"
+features = ["serde"]
+default-features = false
