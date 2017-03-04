@@ -10,19 +10,21 @@ readme = "README.md"
 keywords = ["chat", "xmpp", "jabber"]
 
 [dependencies]
-gdk = "0.5.1"
-gio = "0.1.1"
-glib = "0.1.1"
-lazy_static = "0.2.2"
+gdk = "0.5.2"
+gio = "0.1.2"
+glib = "0.1.2"
+gtk-sys = "0.3.3"
+gdk-sys = "0.3.3"
+lazy_static = "0.2.4"
 regex = "0.2.1"
-serde = "0.8.23"
-serde_derive = "0.8.23"
+serde = "0.9.10"
+serde_derive = "0.9.10"
 
 [dependencies.gtk]
-version = "0.1.1"
+version = "0.1.2"
 features = ["v3_16"]
 
 [dependencies.toml]
-version = "0.2.1"
+version = "0.3.1"
 features = ["serde"]
 default-features = false

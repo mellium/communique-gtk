@@ -8,16 +8,17 @@ use std::path::PathBuf;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Config {
-    pub theme: String,
-    #[serde(rename = "account")]
+    pub theme: Option<String>,
+
+    #[serde(rename = "account", default = "Vec::new")]
     pub accounts: Vec<Account>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Account {
     pub jid: String,
-    pub password: String,
-    pub enabled: bool,
+    pub password: Option<String>,
+    pub enabled: Option<bool>,
 }
 
 pub fn load_config() -> Config {
@@ -45,6 +46,6 @@ pub fn load_config() -> Config {
         .unwrap()
         .read_to_string(&mut s)
         .unwrap();
-    let parsed: Config = toml::decode(s.parse().unwrap()).unwrap();
+    let parsed: Config = toml::from_str(&s).unwrap();
     parsed
 }
