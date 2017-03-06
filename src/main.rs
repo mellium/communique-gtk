@@ -38,18 +38,36 @@ fn main() {
         mainbox.add(&login_pane.get_widget());
     }
 
-    // TODO: Why doesn't this work?
-    if config.theme != "system_dark" && config.theme != "system_light" {
-        let style_provider = gtk::CssProvider::new();
-        style_provider.load_from_data(res::STYLE_CONVERSATIONS).unwrap();
-        let display = gdk::Display::get_default().unwrap();
-        let screen = display.get_default_screen();
-        gtk::StyleContext::add_provider_for_screen(&screen,
-                                                   &style_provider,
-                                                   gtk::STYLE_PROVIDER_PRIORITY_APPLICATION);
-    }
-
     let app = gtk::Application::new(Some(res::APP_ID), gio::APPLICATION_FLAGS_NONE).unwrap();
+
+    match config.theme.as_ref().map(|s| s.as_ref()) {
+        Some("dark") => {
+            if let Some(settings) = gtk::Settings::get_default() {
+                // TODO: This is deprecated, but what's the rust version of:
+                // g_object_set(gtk_settings_get_default(),
+                //              "gtk-application-prefer-dark-theme",
+                //              TRUE,
+                //              NULL);
+                settings.set_property_gtk_application_prefer_dark_theme(true);
+            }
+        }
+        Some("light") => {
+            if let Some(settings) = gtk::Settings::get_default() {
+                settings.set_property_gtk_application_prefer_dark_theme(false);
+            }
+        }
+        Some("conversations") => {
+            // TODO: Why doesn't this work?
+            let style_provider = gtk::CssProvider::new();
+            style_provider.load_from_data(res::STYLE_CONVERSATIONS).unwrap();
+            let display = gdk::Display::get_default().unwrap();
+            let screen = display.get_default_screen();
+            gtk::StyleContext::add_provider_for_screen(&screen,
+                                                       &style_provider,
+                                                       gtk::STYLE_PROVIDER_PRIORITY_APPLICATION);
+        }
+        _ => {}
+    }
 
     // TODO: app.register and then move things to the startup handler.
     // app.connect_startup(move |app| {
