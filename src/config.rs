@@ -10,7 +10,7 @@ use std::path::PathBuf;
 pub struct Config {
     pub theme: Option<String>,
 
-    #[serde(rename = "account", default = "Vec::new")]
+    #[serde(rename = "account", default)]
     pub accounts: Vec<Account>,
 }
 
