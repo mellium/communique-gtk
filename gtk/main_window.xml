@@ -42,7 +42,7 @@
           </object>
         </child>
         <child>
-          <object class="GtkButton" id="logobutton">
+          <object class="GtkMenuButton" id="junk_drawer">
             <property name="label">❧</property>
           </object>
           <packing>

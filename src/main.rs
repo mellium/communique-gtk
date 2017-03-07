@@ -3,6 +3,7 @@
 //! A modern XMPP client in Rust and GTK3+.
 
 #![crate_type = "bin"]
+#![feature(proc_macro)]
 
 #[macro_use]
 extern crate lazy_static;
@@ -13,23 +14,49 @@ extern crate serde_derive;
 extern crate gtk;
 use gtk::prelude::*;
 
+extern crate gtk_sys;
+extern crate gdk_sys;
+
 extern crate gdk;
 extern crate gio;
 extern crate glib;
+extern crate gtkbuilder;
 extern crate regex;
 extern crate toml;
 
-mod res;
 mod config;
-mod pane;
 mod login;
+mod pane;
+mod res;
 
+use gtkbuilder::gtkbuilder;
 use pane::Pane;
 
 fn main() {
     gtk::init().expect("Failed to initialize GTK");
 
     let builder = gtk::Builder::new_from_string(res::UI_MAIN_WINDOW);
+
+    // Build the main menu.
+    {
+        let junk_drawer = builder.get_object::<gtk::MenuButton>("junk_drawer")
+            .expect("Failed to create menu");
+        //let menu = {
+        //    let menu = gtk::Menu::new();
+        //    menu.set_title("Junk Drawer");
+        //    let about = gtk::MenuItem::new_with_label("About");
+        //    menu.append(&about);
+        //    about.show();
+        //    menu
+        //};
+        let builder = gtkbuilder!("gtk/menus.ui");
+        let menu = builder.get(&"menubar"); //.unwrap().downcast::<gtk::Menu>().unwrap();
+        junk_drawer.set_popup(menu);
+        // junk_drawer.connect_button_press_event(move |_, e| -> Inhibit {
+        //     menu.popup_easy(gdk_sys::GDK_BUTTON_PRIMARY as u32, e.get_time());
+        //     gtk::Inhibit(true)
+        // });
+    }
 
     let config = config::load_config();
     if config.accounts.len() == 0 {
@@ -70,8 +97,9 @@ fn main() {
     }
 
     // TODO: app.register and then move things to the startup handler.
-    // app.connect_startup(move |app| {
-    let window = builder.get_object::<gtk::ApplicationWindow>("main_window").unwrap();
+    // app.connect_startup(|app| {
+    let window = builder.get_object::<gtk::ApplicationWindow>("main_window")
+        .expect("Failed to construct the main window");
     window.set_title(res::APP_NAME);
     window.set_default_size(350, 70);
     window.set_position(gtk::WindowPosition::Center);

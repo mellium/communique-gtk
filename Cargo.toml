@@ -19,6 +19,7 @@ lazy_static = "0.2.4"
 regex = "0.2.1"
 serde = "0.9.10"
 serde_derive = "0.9.10"
+gtkbuilder = { path = "../gtkbuilder" }
 
 [dependencies.gtk]
 version = "0.1.2"

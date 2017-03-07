@@ -12,6 +12,11 @@ pub const SUGGESTED_PASSWORD_LEN: f64 = 16.0;
 
 pub const UI_MAIN_WINDOW: &'static str = include_str!("../gtk/main_window.xml");
 pub const UI_LOGIN: &'static str = include_str!("../gtk/login_layout.xml");
+
+// Causes cargo to rebuild when gtk/about.xml changes.
+#[allow(dead_code)]
+pub const UI_ABOUT: &'static str = include_str!("../gtk/about.xml");
+
 // pub const UI_ACCOUNTS_LAYOUT: &'static str = include_str!("../ui/accounts_layout.xml");
 // pub const UI_CHAT_LAYOUT: &'static str = include_str!("../ui/chat_layout.xml");
 
