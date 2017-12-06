@@ -12,6 +12,7 @@ extern crate lazy_static;
 extern crate serde_derive;
 
 extern crate gtk;
+use gdk::DisplayExt;
 use gtk::prelude::*;
 
 extern crate gtk_sys;
@@ -20,7 +21,6 @@ extern crate gdk_sys;
 extern crate gdk;
 extern crate gio;
 extern crate glib;
-extern crate gtkbuilder;
 extern crate regex;
 extern crate toml;
 
@@ -29,7 +29,6 @@ mod login;
 mod pane;
 mod res;
 
-use gtkbuilder::gtkbuilder;
 use pane::Pane;
 
 fn main() {
@@ -38,25 +37,25 @@ fn main() {
     let builder = gtk::Builder::new_from_string(res::UI_MAIN_WINDOW);
 
     // Build the main menu.
-    {
-        let junk_drawer = builder.get_object::<gtk::MenuButton>("junk_drawer")
-            .expect("Failed to create menu");
-        //let menu = {
-        //    let menu = gtk::Menu::new();
-        //    menu.set_title("Junk Drawer");
-        //    let about = gtk::MenuItem::new_with_label("About");
-        //    menu.append(&about);
-        //    about.show();
-        //    menu
-        //};
-        let builder = gtkbuilder!("gtk/menus.ui");
-        let menu = builder.get(&"menubar"); //.unwrap().downcast::<gtk::Menu>().unwrap();
-        junk_drawer.set_popup(menu);
-        // junk_drawer.connect_button_press_event(move |_, e| -> Inhibit {
-        //     menu.popup_easy(gdk_sys::GDK_BUTTON_PRIMARY as u32, e.get_time());
-        //     gtk::Inhibit(true)
-        // });
-    }
+    //{
+    //    let junk_drawer = builder.get_object::<gtk::MenuButton>("junk_drawer")
+    //        .expect("Failed to create menu");
+    //    //let menu = {
+    //    //    let menu = gtk::Menu::new();
+    //    //    menu.set_title("Junk Drawer");
+    //    //    let about = gtk::MenuItem::new_with_label("About");
+    //    //    menu.append(&about);
+    //    //    about.show();
+    //    //    menu
+    //    //};
+    //    let builder = gtkbuilder!("gtk/menus.ui");
+    //    let menu = builder.get(&"menubar"); //.unwrap().downcast::<gtk::Menu>().unwrap();
+    //    junk_drawer.set_popup(menu);
+    //    // junk_drawer.connect_button_press_event(move |_, e| -> Inhibit {
+    //    //     menu.popup_easy(gdk_sys::GDK_BUTTON_PRIMARY as u32, e.get_time());
+    //    //     gtk::Inhibit(true)
+    //    // });
+    //}
 
     let config = config::load_config();
     if config.accounts.len() == 0 {
@@ -65,7 +64,7 @@ fn main() {
         mainbox.add(&login_pane.get_widget());
     }
 
-    let app = gtk::Application::new(Some(res::APP_ID), gio::APPLICATION_FLAGS_NONE).unwrap();
+    let app = gtk::Application::new(Some(res::APP_ID), gio::ApplicationFlags::FLAGS_NONE).unwrap();
 
     match config.theme.as_ref().map(|s| s.as_ref()) {
         Some("dark") => {
@@ -86,7 +85,7 @@ fn main() {
         Some("conversations") => {
             // TODO: Why doesn't this work?
             let style_provider = gtk::CssProvider::new();
-            style_provider.load_from_data(res::STYLE_CONVERSATIONS).unwrap();
+            style_provider.load_from_data(res::STYLE_CONVERSATIONS.as_bytes()).unwrap();
             let display = gdk::Display::get_default().unwrap();
             let screen = display.get_default_screen();
             gtk::StyleContext::add_provider_for_screen(&screen,

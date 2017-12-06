@@ -10,22 +10,17 @@ readme = "README.md"
 keywords = ["chat", "xmpp", "jabber"]
 
 [dependencies]
-gdk = "0.5.2"
-gio = "0.1.2"
-glib = "0.1.2"
-gtk-sys = "0.3.3"
-gdk-sys = "0.3.3"
-lazy_static = "0.2.4"
-regex = "0.2.1"
-serde = "0.9.10"
-serde_derive = "0.9.10"
-gtkbuilder = { path = "../gtkbuilder" }
+gdk = "0.7"
+gio = "0.3"
+glib = "0.4"
+gtk-sys = "0.5"
+gdk-sys = "0.5"
+lazy_static = "0.2"
+regex = "0.2"
+serde = "1.0"
+serde_derive = "1.0"
+toml = "0.4"
 
 [dependencies.gtk]
-version = "0.1.2"
+version = "0.3"
 features = ["v3_16"]
-
-[dependencies.toml]
-version = "0.3.1"
-features = ["serde"]
-default-features = false
