@@ -22,12 +22,12 @@ extern crate toml;
 
 use gdk::DisplayExt;
 use gio::ApplicationExt;
-use gtk::MenuButtonExt;
 use gtk::prelude::*;
 use pane::Pane;
 
 mod config;
 mod login;
+mod menu;
 mod pane;
 mod res;
 
@@ -35,24 +35,7 @@ fn main() {
     gtk::init().expect("Failed to initialize GTK");
 
     let builder = gtk::Builder::new_from_string(res::UI_MAIN_WINDOW);
-
-    // Build the main menu.
-    {
-        let junk_drawer: gtk::MenuButton = builder
-            .get_object::<gtk::MenuButton>("junk_drawer")
-            .expect("Failed to create menu");
-        let menu = {
-            let menu = gtk::Menu::new();
-            menu.set_title("Junk Drawer");
-
-            let about = gtk::MenuItem::new_with_label("About");
-            menu.append(&about);
-            about.show();
-
-            menu
-        };
-        junk_drawer.set_popup(Some(&menu));
-    }
+    menu::junk_drawer(&builder);
 
     let config = config::load_config();
     if config.accounts.len() == 0 {
