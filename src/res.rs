@@ -1,4 +1,4 @@
-pub const APP_NAME: &'static str = "Yokel";
+pub const APP_NAME: &'static str = "Communiqué";
 pub const APP_ID: &'static str = "com.mellium.yokel";
 
 // NIST SP 800-63B <https://pages.nist.gov/800-63-3/sp800-63b.html> recommends 8 passwords as a

@@ -7,9 +7,9 @@
     <property name="destroy_with_parent">True</property>
     <property name="type_hint">splashscreen</property>
     <property name="skip_taskbar_hint">True</property>
-    <property name="program_name">Yokel</property>
+    <property name="program_name">Communiqué</property>
     <property name="version">0.0.1</property>
-    <property name="copyright" translatable="no">Copyright © 2017 The Yokel Authors</property>
+    <property name="copyright" translatable="no">Copyright © 2017 The Communiqué Authors</property>
     <property name="website">https://mellium.im</property>
     <property name="website_label" translatable="no">Mellium.im</property>
     <property name="authors">Sam Whited</property>
