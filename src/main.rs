@@ -11,25 +11,24 @@ extern crate lazy_static;
 #[macro_use]
 extern crate serde_derive;
 
-extern crate gtk;
-use gdk::DisplayExt;
-use gtk::prelude::*;
-
-extern crate gtk_sys;
-extern crate gdk_sys;
-
 extern crate gdk;
+extern crate gdk_sys;
 extern crate gio;
 extern crate glib;
+extern crate gtk;
+extern crate gtk_sys;
 extern crate regex;
 extern crate toml;
+
+use gdk::DisplayExt;
+use gtk::MenuButtonExt;
+use gtk::prelude::*;
+use pane::Pane;
 
 mod config;
 mod login;
 mod pane;
 mod res;
-
-use pane::Pane;
 
 fn main() {
     gtk::init().expect("Failed to initialize GTK");
@@ -37,25 +36,19 @@ fn main() {
     let builder = gtk::Builder::new_from_string(res::UI_MAIN_WINDOW);
 
     // Build the main menu.
-    //{
-    //    let junk_drawer = builder.get_object::<gtk::MenuButton>("junk_drawer")
-    //        .expect("Failed to create menu");
-    //    //let menu = {
-    //    //    let menu = gtk::Menu::new();
-    //    //    menu.set_title("Junk Drawer");
-    //    //    let about = gtk::MenuItem::new_with_label("About");
-    //    //    menu.append(&about);
-    //    //    about.show();
-    //    //    menu
-    //    //};
-    //    let builder = gtkbuilder!("gtk/menus.ui");
-    //    let menu = builder.get(&"menubar"); //.unwrap().downcast::<gtk::Menu>().unwrap();
-    //    junk_drawer.set_popup(menu);
-    //    // junk_drawer.connect_button_press_event(move |_, e| -> Inhibit {
-    //    //     menu.popup_easy(gdk_sys::GDK_BUTTON_PRIMARY as u32, e.get_time());
-    //    //     gtk::Inhibit(true)
-    //    // });
-    //}
+    {
+        let junk_drawer: gtk::MenuButton = builder.get_object::<gtk::MenuButton>("junk_drawer")
+            .expect("Failed to create menu");
+        let menu = {
+            let menu = gtk::Menu::new();
+            menu.set_title("Junk Drawer");
+            let about = gtk::MenuItem::new_with_label("About");
+            menu.append(&about);
+            about.show();
+            menu
+        };
+        junk_drawer.set_popup(Some(&menu));
+    }
 
     let config = config::load_config();
     if config.accounts.len() == 0 {
