@@ -29,8 +29,10 @@ impl<U: gtk::IsA<gtk::Widget> + gtk::IsA<gtk::Object>> Login<U> {
                 if RE.is_match(&new_entry) {
                     entry.set_icon_from_icon_name(gtk::EntryIconPosition::Secondary, None);
                 } else {
-                    entry.set_icon_from_icon_name(gtk::EntryIconPosition::Secondary,
-                                                  Some("dialog-warning-symbolic"));
+                    entry.set_icon_from_icon_name(
+                        gtk::EntryIconPosition::Secondary,
+                        Some("dialog-warning-symbolic"),
+                    );
                 }
             });
             jid_entry.connect_delete_text(|entry, _, _| {
@@ -38,8 +40,10 @@ impl<U: gtk::IsA<gtk::Widget> + gtk::IsA<gtk::Object>> Login<U> {
                 if RE.is_match(&text) {
                     entry.set_icon_from_icon_name(gtk::EntryIconPosition::Secondary, None);
                 } else {
-                    entry.set_icon_from_icon_name(gtk::EntryIconPosition::Secondary,
-                                                  Some("dialog-warning-symbolic"));
+                    entry.set_icon_from_icon_name(
+                        gtk::EntryIconPosition::Secondary,
+                        Some("dialog-warning-symbolic"),
+                    );
                 }
             });
         }
@@ -47,16 +51,18 @@ impl<U: gtk::IsA<gtk::Widget> + gtk::IsA<gtk::Object>> Login<U> {
         if let Some(password_entry) = builder.get_object::<gtk::Entry>("password") {
             if res::SUGGESTED_PASSWORD_LEN > 0.0 {
                 password_entry.connect_insert_text(|entry, _, _| {
-                    entry.set_progress_fraction((entry.get_text_length() + 1) as f64 /
-                                                res::SUGGESTED_PASSWORD_LEN);
+                    entry.set_progress_fraction(
+                        (entry.get_text_length() + 1) as f64 / res::SUGGESTED_PASSWORD_LEN,
+                    );
                 });
                 password_entry.connect_delete_text(|entry, start, end| {
                     let len = entry.get_text_length();
                     if end < 0 {
                         entry.set_progress_fraction(0.0);
                     } else {
-                        entry.set_progress_fraction((len - (end - start) as u16) as f64 /
-                                                    res::SUGGESTED_PASSWORD_LEN);
+                        entry.set_progress_fraction(
+                            (len - (end - start) as u16) as f64 / res::SUGGESTED_PASSWORD_LEN,
+                        );
                     }
                 });
             }
