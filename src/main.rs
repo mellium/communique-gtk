@@ -23,24 +23,22 @@ extern crate toml;
 use gdk::DisplayExt;
 use gio::ApplicationExt;
 use gtk::prelude::*;
-use pane::Pane;
+use ui::pane::Pane;
 
 mod config;
-mod login;
-mod menu;
-mod pane;
+mod ui;
 mod res;
 
 fn main() {
     gtk::init().expect("Failed to initialize GTK");
 
     let builder = gtk::Builder::new_from_string(res::UI_MAIN_WINDOW);
-    menu::junk_drawer(&builder);
+    ui::menu::junk_drawer(&builder);
 
     let config = config::load_config();
     if config.accounts.len() == 0 {
         let mainbox = builder.get_object::<gtk::Box>("main_view_box").unwrap();
-        let login_pane = login::Login::<gtk::Box>::new().unwrap();
+        let login_pane = ui::login::Login::<gtk::Box>::new().unwrap();
         mainbox.add(&login_pane.get_widget());
     }
 

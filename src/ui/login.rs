@@ -1,11 +1,9 @@
 use gtk;
-use res;
-
 use gtk::EditableSignals;
 use gtk::EntryExt;
-use pane::Pane;
 use regex::Regex;
-
+use res;
+use ui::pane;
 
 pub struct Login<T: gtk::IsA<gtk::Widget>> {
     builder: gtk::Builder,
@@ -79,7 +77,7 @@ impl<U: gtk::IsA<gtk::Widget> + gtk::IsA<gtk::Object>> Login<U> {
     }
 }
 
-impl<U: gtk::IsA<gtk::Widget>> Pane<U> for Login<U> {
+impl<U: gtk::IsA<gtk::Widget>> pane::Pane<U> for Login<U> {
     fn get_widget(self) -> U {
         self.view
     }
