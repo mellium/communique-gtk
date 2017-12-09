@@ -23,10 +23,10 @@ extern crate toml;
 use gdk::DisplayExt;
 use gio::ApplicationExt;
 use gtk::prelude::*;
-use ui::pane::Pane;
 
 mod config;
 mod ui;
+mod widget;
 mod res;
 
 fn main() {
@@ -38,8 +38,9 @@ fn main() {
     let config = config::load_config();
     if config.accounts.len() == 0 {
         let mainbox = builder.get_object::<gtk::Box>("main_view_box").unwrap();
-        let login_pane = ui::login::Login::<gtk::Box>::new().unwrap();
-        mainbox.add(&login_pane.get_widget());
+        let login_pane = widget::Login::new();
+        mainbox.add(login_pane.as_ref());
+        mainbox.set_child_packing(login_pane.as_ref(), true, true, 0, gtk::PackType::Start);
     }
 
     let app = gtk::Application::new(Some(res::APP_ID), gio::ApplicationFlags::FLAGS_NONE).unwrap();
