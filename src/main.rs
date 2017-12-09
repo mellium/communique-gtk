@@ -32,18 +32,9 @@ mod res;
 fn main() {
     gtk::init().expect("Failed to initialize GTK");
 
-    let builder = gtk::Builder::new_from_string(res::UI_MAIN_WINDOW);
-    ui::menu::junk_drawer(&builder);
+    let app = gtk::Application::new(Some(res::APP_ID), gio::ApplicationFlags::FLAGS_NONE).unwrap();
 
     let config = config::load_config();
-    if config.accounts.len() == 0 {
-        let mainbox = builder.get_object::<gtk::Box>("main_view_box").unwrap();
-        let login_pane = widget::Login::new();
-        mainbox.add(login_pane.as_ref());
-        mainbox.set_child_packing(login_pane.as_ref(), true, true, 0, gtk::PackType::Start);
-    }
-
-    let app = gtk::Application::new(Some(res::APP_ID), gio::ApplicationFlags::FLAGS_NONE).unwrap();
 
     match config.theme.as_ref().map(|s| s.as_ref()) {
         Some("dark") => {
@@ -78,27 +69,24 @@ fn main() {
         _ => {}
     }
 
-    app.connect_startup(move |a| {
-        let window = builder
-            .get_object::<gtk::ApplicationWindow>("main_window")
-            .expect("Failed to construct the main window");
-        window.set_title(res::APP_NAME);
-        window.set_default_size(350, 70);
-        window.set_position(gtk::WindowPosition::Center);
-        window.connect_delete_event(|_, _| {
+    app.connect_startup(move |app| {
+        let window = widget::AppWindow::new(&app);
+        window.as_ref().connect_delete_event(|_, _| {
             gtk::main_quit();
             Inhibit(false)
         });
-        a.add_window(&window);
-        window.show_all();
+        if config.accounts.len() == 0 {
+            let login_pane = widget::Login::new();
+            window.set_view(login_pane.as_ref());
+        }
+
+        app.add_window(window.as_ref());
+        window.as_ref().show_all();
     });
 
-    match app.register(None) {
-        Ok(_) => {}
-        Err(e) => {
-            eprintln!("Error registering application: {}", e);
-            std::process::exit(1);
-        }
+    if let Err(e) = app.register(None) {
+        eprintln!("Error registering application: {}", e);
+        std::process::exit(1);
     }
     gtk::main();
 }

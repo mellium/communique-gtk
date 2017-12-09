@@ -6,6 +6,4 @@ pub const APP_ID: &'static str = "com.mellium.yokel";
 // Add a factor of safety for the suggested length.
 pub const SUGGESTED_PASSWORD_LEN: f64 = 16.0;
 
-pub const UI_MAIN_WINDOW: &'static str = include_str!("../gtk/main_window.xml");
-
 pub const STYLE_CONVERSATIONS: &'static str = include_str!("../styles/conversations.css");
