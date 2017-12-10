@@ -39,7 +39,8 @@ pub fn header_bar() -> gtk::HeaderBar {
     context_button.set_popup(&menu);
     bar.add(&context_button);
 
-    let new_button = gtk::Button::new_with_label("+");
+    let new_button =
+        gtk::Button::new_from_icon_name("list-add-symbolic", gtk::IconSize::Button.into());
     bar.add(&new_button);
 
     let search = gtk::SearchEntry::new();
