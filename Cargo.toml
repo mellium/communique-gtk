@@ -12,11 +12,9 @@ keywords = ["chat", "xmpp", "jabber"]
 [dependencies]
 gdk = "0.7"
 gdk-pixbuf = "0.3"
-gdk-sys = "0.5"
 gio = "0.3"
 glib = "0.4"
 pango = "0.3"
-gtk-sys = "0.5"
 lazy_static = "1.0.0"
 regex = "0.2"
 serde = "1.0"
@@ -25,4 +23,4 @@ toml = "0.4"
 
 [dependencies.gtk]
 version = "0.3"
-features = ["v3_16"]
+features = ["v3_14"]

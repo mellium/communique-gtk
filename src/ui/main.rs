@@ -20,7 +20,6 @@ use gtk::WidgetExt;
 pub fn header_bar(window: &gtk::Window, logobuf: &gdk_pixbuf::Pixbuf) -> gtk::HeaderBar {
     let bar = gtk::HeaderBar::new();
 
-    bar.set_has_subtitle(false);
     bar.set_title(res::APP_NAME);
 
     let buttons = title_buttons();
