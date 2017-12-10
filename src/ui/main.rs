@@ -25,8 +25,8 @@ pub fn header_bar() -> gtk::HeaderBar {
     let menu = {
         let menu = gtk::Menu::new();
 
-        let about = gtk::MenuItem::new_with_label("About");
-        let quit = gtk::MenuItem::new_with_label("Quit");
+        let about = gtk::MenuItem::new_with_label(translate!("About"));
+        let quit = gtk::MenuItem::new_with_label(translate!("Quit"));
 
         menu.append(&about);
         menu.append(&quit);
@@ -52,8 +52,9 @@ fn title_buttons() -> gtk::ButtonBox {
     let bbox = gtk::ButtonBox::new(gtk::Orientation::Horizontal);
     bbox.set_layout(gtk::ButtonBoxStyle::Center);
 
-    let roster = gtk::RadioButton::new_with_label("Roster");
-    let conversations = gtk::RadioButton::new_with_label_from_widget(&roster, "Conversations");
+    let roster = gtk::RadioButton::new_with_label(translate!("Roster"));
+    let conversations =
+        gtk::RadioButton::new_with_label_from_widget(&roster, translate!("Conversations"));
 
     roster.set_property_draw_indicator(false);
     conversations.set_property_draw_indicator(false);

@@ -12,7 +12,8 @@ use glib::Cast;
 use regex::Regex;
 use res;
 
-/// The Login widget
+/// The Login widget provides a username and password text entry as well as register and login
+/// buttons.
 pub struct Login {
     view: gtk::Widget,
 }
@@ -46,7 +47,7 @@ impl Login {
         center_box.add(&entry_box);
 
         let jid_entry = gtk::Entry::new();
-        jid_entry.set_placeholder_text("user@example.com");
+        jid_entry.set_placeholder_text(format!("{}@example.com", translate!("user")).as_str());
         jid_entry.set_input_purpose(gtk::InputPurpose::Email);
         entry_box.add(&jid_entry);
 
@@ -77,7 +78,7 @@ impl Login {
         });
 
         let pass_entry = gtk::Entry::new();
-        pass_entry.set_placeholder_text("Password");
+        pass_entry.set_placeholder_text(translate!("Password"));
         pass_entry.set_input_purpose(gtk::InputPurpose::Password);
         pass_entry.set_visibility(false);
         entry_box.add(&pass_entry);
@@ -93,9 +94,8 @@ impl Login {
         button_box.set_can_focus(false);
         center_box.add(&button_box);
 
-        // TODO: use translabtable strings
-        let connect = gtk::Button::new_with_label("Connect");
-        let register = gtk::Button::new_with_label("Register");
+        let connect = gtk::Button::new_with_label(translate!("Connect"));
+        let register = gtk::Button::new_with_label(translate!("Register"));
         button_box.add(&register);
         button_box.add(&connect);
         button_box.set_child_packing(&register, false, false, 0, gtk::PackType::End);

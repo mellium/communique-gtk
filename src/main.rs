@@ -15,26 +15,29 @@ extern crate lazy_static;
 extern crate serde_derive;
 
 extern crate gdk;
+extern crate gdk_pixbuf;
 extern crate gdk_sys;
 extern crate gio;
 extern crate glib;
 extern crate gtk;
 extern crate gtk_sys;
+extern crate pango;
 extern crate regex;
 extern crate toml;
-extern crate gdk_pixbuf;
 
 use gdk::DisplayExt;
 use gio::ApplicationExt;
 use gtk::prelude::*;
 
+#[macro_use]
+mod res;
+
 mod config;
 mod ui;
 mod widget;
-mod res;
 
 fn main() {
-    gtk::init().expect("Failed to initialize GTK");
+    gtk::init().expect(translate!("failed_to_start_gtk"));
 
     let app = gtk::Application::new(Some(res::APP_ID), gio::ApplicationFlags::FLAGS_NONE).unwrap();
 
@@ -85,7 +88,7 @@ fn main() {
     });
 
     if let Err(e) = app.register(None) {
-        eprintln!("Error registering application: {}", e);
+        eprintln!("{}: {}", translate!("error_registering_app"), e);
         std::process::exit(1);
     }
     gtk::main();
