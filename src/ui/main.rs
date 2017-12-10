@@ -1,17 +1,21 @@
 use res;
 
 use gtk;
+use gtk::AboutDialogExt;
 use gtk::ButtonBoxExt;
 use gtk::ButtonExt;
 use gtk::ContainerExt;
+use gtk::DialogExt;
+use gtk::GtkWindowExt;
 use gtk::HeaderBarExt;
 use gtk::MenuButtonExt;
+use gtk::MenuItemExt;
 use gtk::MenuShellExt;
 use gtk::ToggleButtonExt;
 use gtk::WidgetExt;
 
 /// Constructs and populates the main header bar.
-pub fn header_bar() -> gtk::HeaderBar {
+pub fn header_bar(window: &gtk::Window) -> gtk::HeaderBar {
     let bar = gtk::HeaderBar::new();
 
     bar.set_has_subtitle(false);
@@ -27,6 +31,20 @@ pub fn header_bar() -> gtk::HeaderBar {
 
         let about = gtk::MenuItem::new_with_label(translate!("About"));
         let quit = gtk::MenuItem::new_with_label(translate!("Quit"));
+
+        about.connect_activate(clone!(window => move |_| {
+            let p = gtk::AboutDialog::new();
+            p.set_website_label(Some("gtk-rs"));
+            p.set_website(Some("http://gtk-rs.org"));
+            p.set_authors(&["Gtk-rs developers"]);
+            p.set_title(translate!("About"));
+            p.set_transient_for(Some(&window));
+            p.run();
+            p.destroy();
+        }));
+        quit.connect_activate(clone!(window => move |_| {
+            window.destroy();
+        }));
 
         menu.append(&about);
         menu.append(&quit);

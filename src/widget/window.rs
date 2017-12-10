@@ -1,10 +1,11 @@
+use glib::Cast;
+use res;
+use ui;
+
 use gtk;
 use gtk::BoxExt;
 use gtk::ContainerExt;
 use gtk::GtkWindowExt;
-
-use res;
-use ui;
 
 /// The main application window ties together the header bar, various views, and menus.
 pub struct AppWindow {
@@ -22,7 +23,7 @@ impl AppWindow {
         window.set_default_size(350, 70);
         window.set_position(gtk::WindowPosition::Center);
 
-        let bar = ui::main::header_bar();
+        let bar = ui::main::header_bar(&window.clone().upcast::<gtk::Window>());
         window.set_titlebar(&bar);
 
         let container = gtk::Box::new(gtk::Orientation::Vertical, 0);
