@@ -89,6 +89,7 @@ fn main() {
         if config.accounts.len() == 0 {
             let login_pane = widget::Login::new(&logobuf);
             window.set_view(login_pane.as_ref());
+            login_pane.grab_default();
         }
 
         app.add_window(window.as_ref());
