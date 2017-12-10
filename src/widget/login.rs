@@ -1,5 +1,3 @@
-use glib::Cast;
-
 use gtk;
 use gtk::BoxExt;
 use gtk::ContainerExt;
@@ -9,6 +7,8 @@ use gtk::FrameExt;
 use gtk::ImageExt;
 use gtk::WidgetExt;
 
+use gdk_pixbuf;
+use glib::Cast;
 use regex::Regex;
 use res;
 
@@ -30,8 +30,12 @@ impl Login {
         center_box.set_spacing(15);
         frame.add(&center_box);
 
-        // TODO: Load this from a buffer.
-        let logo = gtk::Image::new_from_file("img/logo_concept_4_plain.svg");
+        let logoloader = gdk_pixbuf::PixbufLoader::new();
+        logoloader.loader_write(res::SVG_LOGO).unwrap();
+        logoloader.close().unwrap();
+        let logobuf = logoloader.get_pixbuf().unwrap();
+
+        let logo = gtk::Image::new_from_pixbuf(&logobuf);
         logo.set_can_focus(false);
         logo.set_margin_bottom(25);
         logo.set_pixel_size(100);

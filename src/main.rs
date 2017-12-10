@@ -22,6 +22,7 @@ extern crate gtk;
 extern crate gtk_sys;
 extern crate regex;
 extern crate toml;
+extern crate gdk_pixbuf;
 
 use gdk::DisplayExt;
 use gio::ApplicationExt;

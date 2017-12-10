@@ -11,6 +11,7 @@ keywords = ["chat", "xmpp", "jabber"]
 
 [dependencies]
 gdk = "0.7"
+gdk-pixbuf = "0.3"
 gdk-sys = "0.5"
 gio = "0.3"
 glib = "0.4"
