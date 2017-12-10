@@ -1,5 +1,5 @@
 [package]
-name = "yokel"
+name = "communiqué"
 version = "0.1.0"
 authors = ["Sam Whited <sam@samwhited.com>"]
 license = "BSD-2-Clause"
