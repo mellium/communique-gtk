@@ -1,4 +1,4 @@
-Copyright © 2017, Sam Whited
+Copyright © 2017 The Communiqué Authors.
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
