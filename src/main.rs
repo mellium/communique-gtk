@@ -40,10 +40,13 @@ use std::env::args;
 // exiting the process on errors (nothing else should ever call process::exit);
 fn main() {
     gtk::init().expect(translate!("failed_to_start_gtk"));
-    let app = app::App::new();
-    if let Err(e) = app.register(None) {
-        eprintln!("{}: {}", translate!("error_registering_app"), e);
-        process::exit(1);
+    match app::App::new() {
+        Err(e) => {
+            eprintln!("{}: {:?}", translate!("error_registering_app"), e);
+            process::exit(1);
+        }
+        Ok(app) => {
+            app.run(&args().collect::<Vec<_>>());
+        }
     }
-    app.run(&args().collect::<Vec<_>>());
 }

@@ -1,6 +1,5 @@
 use config;
 use gdk_pixbuf;
-use glib::Cast;
 use res;
 use ui;
 use widget;
@@ -12,6 +11,9 @@ use gio;
 use gio::ApplicationExt;
 use gio::ApplicationExtManual;
 
+use glib;
+use glib::Cast;
+
 use gtk;
 use gtk::BoxExt;
 use gtk::ContainerExt;
@@ -21,6 +23,27 @@ use gtk::GtkWindowExt;
 use gtk::SettingsExt;
 use gtk::WidgetExt;
 
+use std::convert::From;
+
+/// Possible error values that can occur when creating applications.
+#[derive(Debug)]
+pub enum Error {
+    Bool(glib::error::BoolError),
+    Glib(glib::Error),
+}
+
+impl From<glib::Error> for Error {
+    fn from(err: glib::Error) -> Self {
+        return Error::Glib(err);
+    }
+}
+
+impl From<glib::error::BoolError> for Error {
+    fn from(err: glib::error::BoolError) -> Self {
+        return Error::Bool(err);
+    }
+}
+
 /// The app handles creating the UI and reacting to GIO signals.
 pub struct App {
     app: gtk::Application,
@@ -29,9 +52,8 @@ pub struct App {
 impl App {
     /// Creates the main application and reacts to the GIO activation signal to populate a window
     /// with a header bar and a view area where the various application panes can be rendered.
-    pub fn new() -> App {
-        let app = gtk::Application::new(Some(res::APP_ID), gio::ApplicationFlags::FLAGS_NONE)
-            .unwrap();
+    pub fn new() -> Result<App, Error> {
+        let app = gtk::Application::new(Some(res::APP_ID), gio::ApplicationFlags::FLAGS_NONE)?;
         let config = config::load_config();
 
         app.connect_startup(clone!(config => move |_| {
@@ -92,7 +114,8 @@ impl App {
         }));
 
 
-        return App { app: app };
+        app.register(None)?;
+        return Ok(App { app: app });
     }
 
     /// Sets the main view of the application window.
@@ -103,14 +126,6 @@ impl App {
 
         container.add(widget);
         container.set_child_packing(widget, true, true, 0, gtk::PackType::Start);
-    }
-
-    /// Registers the application with GIO.
-    pub fn register<'a, P: Into<Option<&'a gio::Cancellable>>>(
-        &self,
-        cancelable: P,
-    ) -> Result<(), gio::Error> {
-        self.app.register(cancelable)
     }
 
     /// Run the application.
