@@ -1,3 +1,5 @@
+use gdk;
+use gdk_pixbuf;
 use res;
 
 use gtk;
@@ -15,7 +17,7 @@ use gtk::ToggleButtonExt;
 use gtk::WidgetExt;
 
 /// Constructs and populates the main header bar.
-pub fn header_bar(window: &gtk::Window) -> gtk::HeaderBar {
+pub fn header_bar(window: &gtk::Window, logobuf: &gdk_pixbuf::Pixbuf) -> gtk::HeaderBar {
     let bar = gtk::HeaderBar::new();
 
     bar.set_has_subtitle(false);
@@ -30,15 +32,24 @@ pub fn header_bar(window: &gtk::Window) -> gtk::HeaderBar {
         let menu = gtk::Menu::new();
 
         let about = gtk::MenuItem::new_with_label(translate!("About"));
-        let quit = gtk::MenuItem::new_with_label(translate!("Quit"));
+        let quit = gtk::MenuItem::new_with_label(translate!("Close"));
 
-        about.connect_activate(clone!(window => move |_| {
+        about.connect_activate(clone!(window,logobuf => move |_| {
             let p = gtk::AboutDialog::new();
-            p.set_website_label(Some("gtk-rs"));
-            p.set_website(Some("http://gtk-rs.org"));
-            p.set_authors(&["Gtk-rs developers"]);
+            p.set_authors(&["Sam Whited"]);
+            p.set_copyright("Copyright © 2017 The Communiqué Authors.\nAll rights reserved.");
+            p.set_destroy_with_parent(true);
+            p.set_license_type(gtk::License::Bsd);
+            p.set_logo(&logobuf);
+            p.set_program_name(res::APP_NAME);
+            p.set_skip_pager_hint(true);
+            p.set_skip_taskbar_hint(true);
             p.set_title(translate!("About"));
-            p.set_transient_for(Some(&window));
+            p.set_transient_for(&window);
+            p.set_type_hint(gdk::WindowTypeHint::Splashscreen);
+            p.set_version(res::VERSION);
+            p.set_website("https://mellium.im");
+            p.set_website_label("mellium.im");
             p.run();
             p.destroy();
         }));
@@ -50,7 +61,9 @@ pub fn header_bar(window: &gtk::Window) -> gtk::HeaderBar {
         menu.append(&quit);
 
         about.show();
-        quit.show();
+        if !bar.get_show_close_button() {
+            quit.show();
+        }
 
         menu
     };

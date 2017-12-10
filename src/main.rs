@@ -79,10 +79,15 @@ fn main() {
         _ => {}
     }
 
+    let logoloader = gdk_pixbuf::PixbufLoader::new();
+    logoloader.loader_write(res::SVG_LOGO).unwrap();
+    logoloader.close().unwrap();
+    let logobuf = logoloader.get_pixbuf().unwrap();
+
     app.connect_startup(move |app| {
-        let window = widget::AppWindow::new(&app);
+        let window = widget::AppWindow::new(&app, &logobuf);
         if config.accounts.len() == 0 {
-            let login_pane = widget::Login::new();
+            let login_pane = widget::Login::new(&logobuf);
             window.set_view(login_pane.as_ref());
         }
 

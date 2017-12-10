@@ -2,6 +2,7 @@ pub mod strings;
 
 pub const APP_NAME: &'static str = "Communiqué";
 pub const APP_ID: &'static str = "im.mellium.yokel";
+pub const VERSION: &'static str = env!("CARGO_PKG_VERSION");
 
 // NIST SP 800-63B <https://pages.nist.gov/800-63-3/sp800-63b.html> recommends 8 characters as a
 // minimum length requirement.

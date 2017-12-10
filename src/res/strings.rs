@@ -12,10 +12,10 @@ lazy_static! {
 
             // Upper
             "About"         => "About",
+            "Close"         => "Close",
             "Connect"       => "Connect",
             "Conversations" => "Conversations",
             "Password"      => "Password",
-            "Quit"          => "Quit",
             "Register"      => "Register",
             "Roster"        => "Roster",
 

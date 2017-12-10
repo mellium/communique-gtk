@@ -1,3 +1,4 @@
+use gdk_pixbuf;
 use glib::Cast;
 use res;
 use ui;
@@ -16,14 +17,14 @@ pub struct AppWindow {
 impl AppWindow {
     /// Creates the main application window and populates it with a header bar and a view area
     /// where the various application panes can be rendered.
-    pub fn new(app: &gtk::Application) -> AppWindow {
+    pub fn new(app: &gtk::Application, logobuf: &gdk_pixbuf::Pixbuf) -> AppWindow {
         let window = gtk::ApplicationWindow::new(app);
 
         window.set_title(res::APP_NAME);
         window.set_default_size(350, 70);
         window.set_position(gtk::WindowPosition::Center);
 
-        let bar = ui::main::header_bar(&window.clone().upcast::<gtk::Window>());
+        let bar = ui::main::header_bar(&window.clone().upcast::<gtk::Window>(), logobuf);
         window.set_titlebar(&bar);
 
         let container = gtk::Box::new(gtk::Orientation::Vertical, 0);

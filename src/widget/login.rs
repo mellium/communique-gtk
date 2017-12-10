@@ -19,7 +19,7 @@ pub struct Login {
 }
 
 impl Login {
-    pub fn new() -> Login {
+    pub fn new(logobuf: &gdk_pixbuf::Pixbuf) -> Login {
         let frame = gtk::Frame::new(None);
         frame.set_can_focus(false);
         frame.set_shadow_type(gtk::ShadowType::None);
@@ -31,12 +31,7 @@ impl Login {
         center_box.set_spacing(15);
         frame.add(&center_box);
 
-        let logoloader = gdk_pixbuf::PixbufLoader::new();
-        logoloader.loader_write(res::SVG_LOGO).unwrap();
-        logoloader.close().unwrap();
-        let logobuf = logoloader.get_pixbuf().unwrap();
-
-        let logo = gtk::Image::new_from_pixbuf(&logobuf);
+        let logo = gtk::Image::new_from_pixbuf(logobuf);
         logo.set_can_focus(false);
         logo.set_margin_bottom(25);
         logo.set_pixel_size(100);
