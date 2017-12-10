@@ -1,6 +1,9 @@
-//! # Yokel
+//! # Communiqué
 //!
-//! A modern XMPP client in Rust and GTK3+.
+//! A instant messaging client in Rust and GTK3+.
+//!
+//! Communiqué works with instant messaging services that support the Extensible Messaging and
+//! Presence Protocol (XMPP), historically known as "Jabber".
 
 #![crate_type = "bin"]
 #![feature(proc_macro)]
@@ -36,14 +39,16 @@ fn main() {
 
     let config = config::load_config();
 
+    let display = gdk::Display::get_default().unwrap();
+    let screen = display.get_default_screen();
+    let style_provider = gtk::CssProvider::new();
+    style_provider
+        .load_from_data(res::STYLE_MAIN.as_bytes())
+        .unwrap();
+
     match config.theme.as_ref().map(|s| s.as_ref()) {
         Some("dark") => {
             if let Some(settings) = gtk::Settings::get_default() {
-                // TODO: This is deprecated, but what's the rust version of:
-                // g_object_set(gtk_settings_get_default(),
-                //              "gtk-application-prefer-dark-theme",
-                //              TRUE,
-                //              NULL);
                 settings.set_property_gtk_application_prefer_dark_theme(true);
             }
         }
@@ -53,13 +58,9 @@ fn main() {
             }
         }
         Some("conversations") => {
-            // TODO: Why doesn't this work?
-            let style_provider = gtk::CssProvider::new();
             style_provider
                 .load_from_data(res::STYLE_CONVERSATIONS.as_bytes())
                 .unwrap();
-            let display = gdk::Display::get_default().unwrap();
-            let screen = display.get_default_screen();
             gtk::StyleContext::add_provider_for_screen(
                 &screen,
                 &style_provider,

@@ -3,14 +3,14 @@
 @define-color color_accent #0091ea;
 @define-color color_text #fafafa;
 
-GtkHeaderBar, GtkHeaderBar GtkButtonBox {
+headerbar, headerbar buttonbox {
 	background: @color_primary;
 	border-color: @color_primary;
 	box-shadow: none;
 	color: @color_text;
 }
 
-GtkHeaderBar GtkButton {
+headerbar button {
 	background: @color_primary;
 	border-color: @color_primary;
 	box-shadow: none;
@@ -18,15 +18,15 @@ GtkHeaderBar GtkButton {
 	text-shadow: none;
 }
 
-GtkHeaderBar GtkButton:hover {
+headerbar button:hover {
 	background: @color_accent;
 }
 
-GtkHeaderBar GtkButton:hover:active {
+headerbar button:hover:active {
 	background: @color_primary_dark;
 }
 
-GtkHeaderBar GtkRadioButton {
+headerbar radiobutton {
 	background: @color_accent;
 	border-color: @color_accent;
 	box-shadow: none;
@@ -34,11 +34,11 @@ GtkHeaderBar GtkRadioButton {
 	text-shadow: none;
 }
 
-GtkHeaderBar GtkRadioButton {
+headerbar radiobutton {
 	border-color: @color_primary;
 }
 
-GtkHeaderBar GtkRadioButton:focus {
+headerbar radiobutton:focus {
 	background: @color_primary;
 	border-color: @color_accent;
 }
@@ -47,17 +47,17 @@ GtkHeaderBar GtkRadioButton:focus {
 	-gtk-icon-shadow: none;
 }
 
-GtkHeaderBar GtkButton.primary {
+headerbar button.primary {
 	background-color: @color_accent;
 	font-weight: bold;
 	border-radius: 0.5em;
 }
 
-GtkHeaderBar GtkButton.primary:hover {
+headerbar button.primary:hover {
 	background-color: @color_primary_dark;
 }
 
-GtkSearchEntry {
+searchentry {
 	background: @color_primary_dark;
 	border: none;
 	box-shadow: none;

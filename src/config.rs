@@ -6,6 +6,8 @@ use std::fs;
 use std::io::prelude::*;
 use std::path::PathBuf;
 
+use res;
+
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Config {
     pub theme: Option<String>,
@@ -38,8 +40,8 @@ pub fn load_config() -> Config {
         }
     };
     let mut path = PathBuf::from(configdir);
-    path.push("yokel");
-    path.push("yokelrc");
+    path.push(res::APP_NAME.to_lowercase());
+    path.push("config.toml");
 
     let mut s = String::new();
     fs::File::open(path.into_os_string().to_str().unwrap())
