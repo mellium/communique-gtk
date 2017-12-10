@@ -54,9 +54,11 @@ impl App {
     /// with a header bar and a view area where the various application panes can be rendered.
     pub fn new() -> Result<App, Error> {
         let app = gtk::Application::new(Some(res::APP_ID), gio::ApplicationFlags::FLAGS_NONE)?;
+        let me = App { app: app };
+
         let config = config::load_config();
 
-        app.connect_startup(clone!(config => move |_| {
+        me.app.connect_startup(clone!(config => move |_| {
             let display = gdk::Display::get_default().unwrap();
             let screen = display.get_default_screen();
             let style_provider = gtk::CssProvider::new();
@@ -86,7 +88,7 @@ impl App {
                 _ => {}
             }
         }));
-        app.connect_activate(clone!(config => move |app| {
+        me.app.connect_activate(clone!(config => move |app| {
             let window = gtk::ApplicationWindow::new(&app);
 
             window.set_title(res::APP_NAME);
@@ -114,8 +116,8 @@ impl App {
         }));
 
 
-        app.register(None)?;
-        return Ok(App { app: app });
+        me.app.register(None)?;
+        return Ok(me);
     }
 
     /// Sets the main view of the application window.
