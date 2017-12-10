@@ -91,6 +91,7 @@ impl Login {
 
         let connect = gtk::Button::new_with_label(translate!("Connect"));
         let register = gtk::Button::new_with_label(translate!("Register"));
+        register.set_sensitive(false);
         button_box.add(&register);
         button_box.add(&connect);
         button_box.set_child_packing(&register, false, false, 0, gtk::PackType::End);

@@ -72,9 +72,11 @@ pub fn header_bar(window: &gtk::Window, logobuf: &gdk_pixbuf::Pixbuf) -> gtk::He
 
     let new_button =
         gtk::Button::new_from_icon_name("list-add-symbolic", gtk::IconSize::Button.into());
+    new_button.set_sensitive(false);
     bar.add(&new_button);
 
     let search = gtk::SearchEntry::new();
+    search.set_sensitive(false);
     bar.pack_end(&search);
 
     return bar;
@@ -83,6 +85,7 @@ pub fn header_bar(window: &gtk::Window, logobuf: &gdk_pixbuf::Pixbuf) -> gtk::He
 fn title_buttons() -> gtk::ButtonBox {
     let bbox = gtk::ButtonBox::new(gtk::Orientation::Horizontal);
     bbox.set_layout(gtk::ButtonBoxStyle::Center);
+    bbox.set_sensitive(false);
 
     let roster = gtk::RadioButton::new_with_label(translate!("Roster"));
     let conversations =
