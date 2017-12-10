@@ -25,14 +25,21 @@ extern crate pango;
 extern crate regex;
 extern crate toml;
 
+use std::env::args;
+
 use gdk::DisplayExt;
 use gio::ApplicationExt;
-use gtk::prelude::*;
+use gio::ApplicationExtManual;
+use gtk::CssProviderExt;
+use gtk::GtkApplicationExt;
+use gtk::SettingsExt;
+use gtk::WidgetExt;
 
 #[macro_use]
-mod res;
+mod macros;
 
 mod config;
+mod res;
 mod ui;
 mod widget;
 
@@ -74,10 +81,6 @@ fn main() {
 
     app.connect_startup(move |app| {
         let window = widget::AppWindow::new(&app);
-        window.as_ref().connect_delete_event(|_, _| {
-            gtk::main_quit();
-            Inhibit(false)
-        });
         if config.accounts.len() == 0 {
             let login_pane = widget::Login::new();
             window.set_view(login_pane.as_ref());
@@ -86,10 +89,11 @@ fn main() {
         app.add_window(window.as_ref());
         window.as_ref().show_all();
     });
+    app.connect_activate(|_| {});
 
     if let Err(e) = app.register(None) {
         eprintln!("{}: {}", translate!("error_registering_app"), e);
         std::process::exit(1);
     }
-    gtk::main();
+    app.run(&args().collect::<Vec<_>>());
 }

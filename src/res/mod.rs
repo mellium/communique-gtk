@@ -1,4 +1,3 @@
-#[macro_use]
 pub mod strings;
 
 pub const APP_NAME: &'static str = "Communiqué";
