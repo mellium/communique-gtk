@@ -43,9 +43,7 @@ fn main() {
     let display = gdk::Display::get_default().unwrap();
     let screen = display.get_default_screen();
     let style_provider = gtk::CssProvider::new();
-    style_provider
-        .load_from_data(res::STYLE_MAIN.as_bytes())
-        .unwrap();
+    style_provider.load_from_data(res::STYLE_MAIN).unwrap();
 
     match config.theme.as_ref().map(|s| s.as_ref()) {
         Some("dark") => {
@@ -60,7 +58,7 @@ fn main() {
         }
         Some("conversations") => {
             style_provider
-                .load_from_data(res::STYLE_CONVERSATIONS.as_bytes())
+                .load_from_data(res::STYLE_CONVERSATIONS)
                 .unwrap();
             gtk::StyleContext::add_provider_for_screen(
                 &screen,

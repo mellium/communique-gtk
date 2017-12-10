@@ -8,5 +8,5 @@ pub const SUGGESTED_PASSWORD_LEN: f64 = 16.0;
 
 pub const SVG_LOGO: &'static [u8] = include_bytes!("../img/logo_concept_4_plain.svg");
 
-pub const STYLE_MAIN: &'static str = include_str!("../style/main.css");
-pub const STYLE_CONVERSATIONS: &'static str = include_str!("../style/conversations.css");
+pub const STYLE_MAIN: &'static [u8] = include_bytes!("../style/main.css");
+pub const STYLE_CONVERSATIONS: &'static [u8] = include_bytes!("../style/conversations.css");
