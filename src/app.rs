@@ -30,7 +30,6 @@ use std::convert::From;
 #[derive(Debug)]
 pub enum Error {
     Bool(glib::error::BoolError),
-    Config(config::Error),
     Glib(glib::Error),
 }
 
@@ -40,11 +39,6 @@ impl From<glib::Error> for Error {
     }
 }
 
-impl From<config::Error> for Error {
-    fn from(err: config::Error) -> Self {
-        Error::Config(err)
-    }
-}
 
 impl From<glib::error::BoolError> for Error {
     fn from(err: glib::error::BoolError) -> Self {
@@ -62,7 +56,7 @@ impl App {
     /// with a header bar and a view area where the various application panes can be rendered.
     pub fn new() -> Result<App, Error> {
         let app = gtk::Application::new(Some(res::APP_ID), gio::ApplicationFlags::FLAGS_NONE)?;
-        let config = config::load_config()?;
+        let config = config::load_config().unwrap_or_default();
         let me = App { app: app };
 
         let display = gdk::Display::get_default().unwrap();

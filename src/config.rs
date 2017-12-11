@@ -9,7 +9,7 @@ use std::path::PathBuf;
 
 use res;
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
 pub struct Config {
     pub theme: Option<String>,
 
@@ -17,7 +17,7 @@ pub struct Config {
     pub accounts: Vec<Account>,
 }
 
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
 pub struct Account {
     pub jid: String,
     pub password: Option<String>,
