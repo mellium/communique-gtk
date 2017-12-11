@@ -3,7 +3,6 @@ use gdk_pixbuf;
 use glib;
 use res;
 use ui;
-use widget;
 
 use gdk;
 use gdk::DisplayExt;
@@ -129,7 +128,7 @@ impl App {
             let container = gtk::Box::new(gtk::Orientation::Vertical, 0);
             window.add(&container);
             if config.accounts.is_empty() {
-                let login_pane = widget::Login::new(&logobuf);
+                let login_pane = ui::Login::new(&logobuf);
                 App::set_view(&container, login_pane.as_ref());
                 login_pane.grab_default();
             }
