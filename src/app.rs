@@ -56,7 +56,13 @@ impl App {
     /// with a header bar and a view area where the various application panes can be rendered.
     pub fn new() -> Result<App, Error> {
         let app = gtk::Application::new(Some(res::APP_ID), gio::ApplicationFlags::FLAGS_NONE)?;
-        let config = config::load_config().unwrap_or_default();
+        let config = match config::load_config() {
+            Ok(config) => config,
+            Err(e) => {
+                eprintln!("{}", e);
+                config::Config::default()
+            }
+        };
         let me = App { app: app };
 
         let display = gdk::Display::get_default().unwrap();
