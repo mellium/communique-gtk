@@ -39,7 +39,6 @@ impl From<glib::Error> for Error {
     }
 }
 
-
 impl From<glib::error::BoolError> for Error {
     fn from(err: glib::error::BoolError) -> Self {
         Error::Bool(err)
@@ -153,16 +152,12 @@ impl App {
             window.show_all();
         }));
 
-
         me.app.register(None)?;
         Ok(me)
     }
 
     /// Sets the main view of the application window.
-    fn set_view<P: gtk::IsA<gtk::Widget>>(
-        container: &gtk::Box,
-        widget: &P,
-    ) {
+    fn set_view<P: gtk::IsA<gtk::Widget>>(container: &gtk::Box, widget: &P) {
         for w in container.get_children() {
             container.remove(&w);
         }

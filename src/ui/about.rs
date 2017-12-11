@@ -12,9 +12,7 @@ pub fn about_dialog<'a, P: gtk::IsA<gtk::Window> + 'a, Q: Into<Option<&'a P>>>(
 ) -> gtk::AboutDialog {
     let p = gtk::AboutDialog::new();
     p.set_authors(&["Sam Whited"]);
-    p.set_copyright(
-        "Copyright © 2017 The Communiqué Authors.\nAll rights reserved.",
-    );
+    p.set_copyright("Copyright © 2017 The Communiqué Authors.\nAll rights reserved.");
     p.set_destroy_with_parent(true);
     p.set_license_type(gtk::License::Bsd);
     p.set_logo(logobuf);
