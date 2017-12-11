@@ -84,9 +84,10 @@ impl Login {
         entry_box.add(&pass_entry);
         // Perform some simple length checks on the password entry field.
         if res::SUGGESTED_PASSWORD_LEN > 0.0 {
-            pass_entry.connect_changed(|entry| match entry.get_text_length() {
-                0 => entry.set_progress_fraction(0.0),
-                l => entry.set_progress_fraction(f64::from(l + 1) / res::SUGGESTED_PASSWORD_LEN),
+            pass_entry.connect_changed(|entry| {
+                entry.set_progress_fraction(
+                    f64::from(entry.get_text_length()) / res::SUGGESTED_PASSWORD_LEN,
+                )
             });
         }
 
