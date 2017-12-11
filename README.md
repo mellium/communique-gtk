@@ -1,6 +1,13 @@
 # Communiqué
 
-*Note that this is a work in progress. It doesn't actually work yet.*
-
 A modern instant messaging client written in Rust and GTK3 for services that
 support XMPP (Jabber).
+
+## Developers
+
+### GIO Actions
+
+The following GIO actions are defined:
+
+* `app.close` — closes the application
+* `app.about` — launches the about dialog

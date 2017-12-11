@@ -1,5 +1,6 @@
 use config;
 use gdk_pixbuf;
+use glib;
 use res;
 use ui;
 use widget;
@@ -8,16 +9,18 @@ use gdk;
 use gdk::DisplayExt;
 
 use gio;
+use gio::ActionMapExt;
 use gio::ApplicationExt;
 use gio::ApplicationExtManual;
-
-use glib;
-use glib::Cast;
+use gio::MenuExt;
+use gio::SimpleActionExt;
 
 use gtk;
+use gtk::AboutDialogExt;
 use gtk::BoxExt;
 use gtk::ContainerExt;
 use gtk::CssProviderExt;
+use gtk::DialogExt;
 use gtk::GtkApplicationExt;
 use gtk::GtkWindowExt;
 use gtk::SettingsExt;
@@ -54,9 +57,8 @@ impl App {
     /// with a header bar and a view area where the various application panes can be rendered.
     pub fn new() -> Result<App, Error> {
         let app = gtk::Application::new(Some(res::APP_ID), gio::ApplicationFlags::FLAGS_NONE)?;
-        let me = App { app: app };
-
         let config = config::load_config();
+        let me = App { app: app };
 
         me.app.connect_startup(clone!(config => move |_| {
             let display = gdk::Display::get_default().unwrap();
@@ -83,24 +85,70 @@ impl App {
                         &screen,
                         &style_provider,
                         gtk::STYLE_PROVIDER_PRIORITY_APPLICATION,
-                    );
+                        );
                 }
                 _ => {}
             }
         }));
         me.app.connect_activate(clone!(config => move |app| {
             let window = gtk::ApplicationWindow::new(&app);
-
-            window.set_title(res::APP_NAME);
-            window.set_default_size(350, 70);
-            window.set_position(gtk::WindowPosition::Center);
-
             let logoloader = gdk_pixbuf::PixbufLoader::new();
             logoloader.loader_write(res::SVG_LOGO).unwrap();
             logoloader.close().unwrap();
             let logobuf = logoloader.get_pixbuf().unwrap();
 
-            let bar = ui::main::header_bar(&window.clone().upcast::<gtk::Window>(), &logobuf);
+            // Quit action
+            let close = gio::SimpleAction::new("close", None);
+            close.connect_activate(clone!( window => move |_, _| {
+                window.destroy();
+            }));
+            app.add_action(&close);
+
+            // About action
+            let about = gio::SimpleAction::new("about", None);
+            about.connect_activate(clone!( window, logobuf => move |_, _| {
+                let p = gtk::AboutDialog::new();
+                p.set_authors(&["Sam Whited"]);
+                p.set_copyright("Copyright © 2017 The Communiqué Authors.\nAll rights reserved.");
+                p.set_destroy_with_parent(true);
+                p.set_license_type(gtk::License::Bsd);
+                p.set_logo(&logobuf);
+                p.set_program_name(res::APP_NAME);
+                p.set_skip_pager_hint(true);
+                p.set_skip_taskbar_hint(true);
+                p.set_title(translate!("About"));
+                p.set_transient_for(&window);
+                p.set_type_hint(gdk::WindowTypeHint::Splashscreen);
+                p.set_version(res::VERSION);
+                p.set_website("https://mellium.im");
+                p.set_website_label("mellium.im");
+                p.run();
+                p.destroy();
+            }));
+            app.add_action(&about);
+
+            window.set_title(res::APP_NAME);
+            window.set_default_size(1280, 720);
+            window.set_position(gtk::WindowPosition::Center);
+
+            // Application menu
+            let menu = {
+                let menu = gio::Menu::new();
+
+                menu.append(translate!("About"), "app.about");
+                menu.append(translate!("Close"), "app.close");
+
+                menu
+            };
+            // Show the application menu in the application or the titlebar depending on the desktop
+            // environments preference.
+            let bar: gtk::HeaderBar;
+            if app.prefers_app_menu() {
+                app.set_app_menu(&menu);
+                bar = ui::main::header_bar(None);
+            } else {
+                bar = ui::main::header_bar(Some(&menu));
+            }
             window.set_titlebar(&bar);
 
             let container = gtk::Box::new(gtk::Orientation::Vertical, 0);
