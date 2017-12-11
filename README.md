@@ -9,5 +9,5 @@ support XMPP (Jabber).
 
 The following GIO actions are defined:
 
-* `app.close` — closes the application
 * `app.about` — launches the about dialog
+* `app.close` — closes the application
