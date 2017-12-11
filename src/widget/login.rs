@@ -21,6 +21,7 @@ pub struct Login {
 }
 
 impl Login {
+    /// Creates a new login pane that can be shown in the application.
     pub fn new(logobuf: &gdk_pixbuf::Pixbuf) -> Login {
         let frame = gtk::Frame::new(None);
         frame.set_can_focus(false);
@@ -85,7 +86,7 @@ impl Login {
         if res::SUGGESTED_PASSWORD_LEN > 0.0 {
             pass_entry.connect_changed(|entry| match entry.get_text_length() {
                 0 => entry.set_progress_fraction(0.0),
-                l @ _ => entry.set_progress_fraction((l + 1) as f64 / res::SUGGESTED_PASSWORD_LEN),
+                l => entry.set_progress_fraction(f64::from(l + 1) / res::SUGGESTED_PASSWORD_LEN),
             });
         }
 
@@ -107,10 +108,10 @@ impl Login {
         button_box.set_child_packing(&register, false, false, 0, gtk::PackType::End);
         button_box.set_child_packing(&connect, false, false, 0, gtk::PackType::End);
 
-        return Login {
+        Login {
             view: frame.upcast::<gtk::Widget>(),
             def: connect,
-        };
+        }
     }
 
     /// Causes self to become the default widget.
@@ -122,6 +123,6 @@ impl Login {
 impl AsRef<gtk::Widget> for Login {
     #[inline]
     fn as_ref(&self) -> &gtk::Widget {
-        return &self.view;
+        &self.view
     }
 }

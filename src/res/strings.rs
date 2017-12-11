@@ -1,9 +1,8 @@
 use std::collections::HashMap;
 use gtk;
-use pango;
 
 lazy_static! {
-    pub static ref LANG: String = gtk::get_default_language().unwrap_or(pango::language::Language::default()).to_string();
+    pub static ref LANG: String = gtk::get_default_language().unwrap_or_default().to_string();
     pub static ref STRINGS: HashMap<&'static str, HashMap<&'static str, &'static str>> = translate!{
         "en-us" => translate!{
             // Low-level GTK errors

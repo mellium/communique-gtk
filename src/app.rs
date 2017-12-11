@@ -36,13 +36,13 @@ pub enum Error {
 
 impl From<glib::Error> for Error {
     fn from(err: glib::Error) -> Self {
-        return Error::Glib(err);
+        Error::Glib(err)
     }
 }
 
 impl From<glib::error::BoolError> for Error {
     fn from(err: glib::error::BoolError) -> Self {
-        return Error::Bool(err);
+        Error::Bool(err)
     }
 }
 
@@ -90,7 +90,7 @@ impl App {
             }
         }));
         me.app.connect_activate(clone!(config => move |app| {
-            let window = gtk::ApplicationWindow::new(&app);
+            let window = gtk::ApplicationWindow::new(app);
             let logoloader = gdk_pixbuf::PixbufLoader::new();
             logoloader.loader_write(res::SVG_LOGO).unwrap();
             logoloader.close().unwrap();
@@ -133,18 +133,17 @@ impl App {
             // Show the application menu in the application or the titlebar depending on the desktop
             // environments preference.
             let menu = ui::app_menu();
-            let bar: gtk::HeaderBar;
-            if app.prefers_app_menu() {
+            let hbar = if app.prefers_app_menu() {
                 app.set_app_menu(&menu);
-                bar = ui::header_bar(None);
+                ui::header_bar(None)
             } else {
-                bar = ui::header_bar(Some(&menu));
-            }
-            window.set_titlebar(&bar);
+                ui::header_bar(Some(&menu))
+            };
+            window.set_titlebar(&hbar);
 
             let container = gtk::Box::new(gtk::Orientation::Vertical, 0);
             window.add(&container);
-            if config.accounts.len() == 0 {
+            if config.accounts.is_empty() {
                 let login_pane = widget::Login::new(&logobuf);
                 App::set_view(&container, login_pane.as_ref());
                 login_pane.grab_default();
@@ -156,13 +155,13 @@ impl App {
 
 
         me.app.register(None)?;
-        return Ok(me);
+        Ok(me)
     }
 
     /// Sets the main view of the application window.
     fn set_view<T: gtk::IsA<gtk::Widget>>(container: &gtk::Box, widget: &T) {
-        for ref w in container.get_children() {
-            container.remove(w);
+        for w in container.get_children() {
+            container.remove(&w);
         }
 
         container.add(widget);
@@ -178,6 +177,6 @@ impl App {
 impl AsRef<gtk::Application> for App {
     #[inline]
     fn as_ref(&self) -> &gtk::Application {
-        return &self.app;
+        &self.app
     }
 }

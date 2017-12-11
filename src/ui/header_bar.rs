@@ -12,30 +12,30 @@ use gtk::WidgetExt;
 
 /// Constructs and populates the main header bar.
 pub fn header_bar(appmenu: Option<&gio::Menu>) -> gtk::HeaderBar {
-    let bar = gtk::HeaderBar::new();
+    let hbar = gtk::HeaderBar::new();
 
-    bar.set_title(res::APP_NAME);
+    hbar.set_title(res::APP_NAME);
 
     let buttons = title_buttons();
-    bar.set_custom_title(&buttons);
+    hbar.set_custom_title(&buttons);
 
     if let Some(menu) = appmenu {
         let context_button = gtk::MenuButton::new();
         context_button.set_label("❧");
         context_button.set_menu_model(menu);
-        bar.add(&context_button);
+        hbar.add(&context_button);
     }
 
     let new_button =
         gtk::Button::new_from_icon_name("list-add-symbolic", gtk::IconSize::Button.into());
     new_button.set_sensitive(false);
-    bar.add(&new_button);
+    hbar.add(&new_button);
 
     let search = gtk::SearchEntry::new();
     search.set_sensitive(false);
-    bar.pack_end(&search);
+    hbar.pack_end(&search);
 
-    return bar;
+    hbar
 }
 
 fn title_buttons() -> gtk::ButtonBox {
@@ -53,5 +53,5 @@ fn title_buttons() -> gtk::ButtonBox {
     bbox.add(&roster);
     bbox.add(&conversations);
 
-    return bbox;
+    bbox
 }

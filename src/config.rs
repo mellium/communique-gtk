@@ -30,7 +30,7 @@ pub fn load_config() -> Config {
         None => {
             match env::home_dir() {
                 Some(s) => {
-                    let mut path = PathBuf::from(s);
+                    let mut path = s;
                     path.push(".config");
 
                     path.into_os_string()
