@@ -27,6 +27,14 @@ pub fn about_dialog<'a, P: gtk::IsA<gtk::Window> + 'a, Q: Into<Option<&'a P>>>(
     p.set_version(res::VERSION);
     p.set_website("https://mellium.im");
     p.set_website_label("mellium.im");
+    p.add_credit_section(
+        translate!("Open Source"),
+        &[
+            "Gtk-rs http://gtk-rs.org/ (MIT)",
+            "toml-rs https://crates.io/crates/toml (MIT/Apache-2.0)",
+            "Rust team libs https://www.rust-lang.org/ (MIT/Apache-2.0)",
+        ],
+    );
 
     p
 }

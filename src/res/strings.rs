@@ -18,6 +18,7 @@ lazy_static! {
             "Password"      => "Password",
             "Register"      => "Register",
             "Roster"        => "Roster",
+            "Open Source"   => "Open Source",
 
             // Lower
             "user" => "user",
