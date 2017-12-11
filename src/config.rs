@@ -3,7 +3,7 @@ extern crate toml;
 use std::env;
 use std::ffi::OsStr;
 use std::fs;
-use std::io::prelude::*;
+use std::io::Read;
 use std::path::PathBuf;
 
 use res;
