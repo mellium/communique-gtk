@@ -131,12 +131,14 @@ impl App {
             if config.accounts.is_empty() {
                 let login_pane = ui::Login::new(&logobuf);
                 switcher = None;
-                App::set_stack(&container, None, login_pane.as_ref());
+                App::set_view(&container, login_pane.as_ref());
                 login_pane.grab_default();
             } else {
                 let chat_pane = ui::Chat::new();
-                switcher = Some(gtk::StackSwitcher::new());
-                App::set_stack(&container, switcher.as_ref(), chat_pane.as_ref());
+                let s = gtk::StackSwitcher::new();
+                s.set_stack(chat_pane.as_ref());
+                switcher = Some(s);
+                App::set_view(&container, chat_pane.as_ref());
             }
 
             let hbar = if app.prefers_app_menu() {
@@ -157,20 +159,16 @@ impl App {
     }
 
     /// Sets the main view of the application window.
-    fn set_stack<'a, T: Into<Option<&'a gtk::StackSwitcher>>>(
+    fn set_view<P: gtk::IsA<gtk::Widget>>(
         container: &gtk::Box,
-        switcher: T,
-        stack: &gtk::Stack,
+        widget: &P,
     ) {
         for w in container.get_children() {
             container.remove(&w);
         }
 
-        if let Some(switcher) = switcher.into() {
-            switcher.set_stack(stack);
-        }
-        container.add(stack);
-        container.set_child_packing(stack, true, true, 0, gtk::PackType::Start);
+        container.add(widget);
+        container.set_child_packing(widget, true, true, 0, gtk::PackType::Start);
     }
 
     /// Run the application.
