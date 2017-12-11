@@ -3,6 +3,7 @@ extern crate toml;
 use std::env;
 use std::ffi::OsStr;
 use std::fs;
+use std::io;
 use std::io::Read;
 use std::path::PathBuf;
 
@@ -23,7 +24,27 @@ pub struct Account {
     pub enabled: Option<bool>,
 }
 
-pub fn load_config() -> Config {
+/// An error type that encapsulates all errors that can be returned while loading and parsing
+/// configuration.
+#[derive(Debug)]
+pub enum Error {
+    De(toml::de::Error),
+    Io(io::Error),
+}
+
+impl From<io::Error> for Error {
+    fn from(err: io::Error) -> Self {
+        Error::Io(err)
+    }
+}
+
+impl From<toml::de::Error> for Error {
+    fn from(err: toml::de::Error) -> Self {
+        Error::De(err)
+    }
+}
+
+pub fn load_config() -> Result<Config, Error> {
     // Uses XDG_CONFIG_HOME, $HOME/.config, or "./" as the config search dir in that order
     let configdir = match env::var_os("XDG_CONFIG_HOME") {
         Some(s) => s,
@@ -44,10 +65,8 @@ pub fn load_config() -> Config {
     path.push("config.toml");
 
     let mut s = String::new();
-    fs::File::open(path.into_os_string().to_str().unwrap())
-        .unwrap()
-        .read_to_string(&mut s)
-        .unwrap();
-    let parsed: Config = toml::from_str(&s).unwrap();
-    parsed
+    fs::File::open(path)?.read_to_string(&mut s)?;
+
+    let cfg: Config = toml::from_str(&s)?;
+    Ok(cfg)
 }
