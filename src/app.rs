@@ -12,7 +12,6 @@ use gio;
 use gio::ActionMapExt;
 use gio::ApplicationExt;
 use gio::ApplicationExtManual;
-use gio::MenuExt;
 use gio::SimpleActionExt;
 
 use gtk;
@@ -131,23 +130,15 @@ impl App {
             window.set_default_size(1280, 720);
             window.set_position(gtk::WindowPosition::Center);
 
-            // Application menu
-            let menu = {
-                let menu = gio::Menu::new();
-
-                menu.append(translate!("About"), "app.about");
-                menu.append(translate!("Close"), "app.close");
-
-                menu
-            };
             // Show the application menu in the application or the titlebar depending on the desktop
             // environments preference.
+            let menu = ui::app_menu();
             let bar: gtk::HeaderBar;
             if app.prefers_app_menu() {
                 app.set_app_menu(&menu);
-                bar = ui::main::header_bar(None);
+                bar = ui::header_bar(None);
             } else {
-                bar = ui::main::header_bar(Some(&menu));
+                bar = ui::header_bar(Some(&menu));
             }
             window.set_titlebar(&bar);
 
