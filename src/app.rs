@@ -57,36 +57,34 @@ impl App {
         let config = config::load_config();
         let me = App { app: app };
 
-        me.app.connect_startup(clone!(config => move |_| {
-            let display = gdk::Display::get_default().unwrap();
-            let screen = display.get_default_screen();
-            let style_provider = gtk::CssProvider::new();
-            style_provider.load_from_data(res::STYLE_MAIN).unwrap();
+        let display = gdk::Display::get_default().unwrap();
+        let screen = display.get_default_screen();
+        let style_provider = gtk::CssProvider::new();
+        style_provider.load_from_data(res::STYLE_MAIN)?;
 
-            match config.theme.as_ref().map(|s| s.as_ref()) {
-                Some("dark") => {
-                    if let Some(settings) = gtk::Settings::get_default() {
-                        settings.set_property_gtk_application_prefer_dark_theme(true);
-                    }
+        match config.theme.as_ref().map(|s| s.as_ref()) {
+            Some("dark") => {
+                if let Some(settings) = gtk::Settings::get_default() {
+                    settings.set_property_gtk_application_prefer_dark_theme(true);
                 }
-                Some("light") => {
-                    if let Some(settings) = gtk::Settings::get_default() {
-                        settings.set_property_gtk_application_prefer_dark_theme(false);
-                    }
-                }
-                Some("conversations") => {
-                    style_provider
-                        .load_from_data(res::STYLE_CONVERSATIONS)
-                        .unwrap();
-                    gtk::StyleContext::add_provider_for_screen(
-                        &screen,
-                        &style_provider,
-                        gtk::STYLE_PROVIDER_PRIORITY_APPLICATION,
-                        );
-                }
-                _ => {}
             }
-        }));
+            Some("light") => {
+                if let Some(settings) = gtk::Settings::get_default() {
+                    settings.set_property_gtk_application_prefer_dark_theme(false);
+                }
+            }
+            Some("conversations") => {
+                style_provider.load_from_data(res::STYLE_CONVERSATIONS)?;
+                gtk::StyleContext::add_provider_for_screen(
+                    &screen,
+                    &style_provider,
+                    gtk::STYLE_PROVIDER_PRIORITY_APPLICATION,
+                );
+            }
+            _ => {}
+        }
+
+        me.app.connect_startup(|_| {});
         me.app.connect_activate(clone!(config => move |app| {
             let window = gtk::ApplicationWindow::new(app);
             let logoloader = gdk_pixbuf::PixbufLoader::new();
