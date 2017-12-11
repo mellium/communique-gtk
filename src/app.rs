@@ -15,7 +15,6 @@ use gio::ApplicationExtManual;
 use gio::SimpleActionExt;
 
 use gtk;
-use gtk::AboutDialogExt;
 use gtk::BoxExt;
 use gtk::ContainerExt;
 use gtk::CssProviderExt;
@@ -106,21 +105,7 @@ impl App {
             // About action
             let about = gio::SimpleAction::new("about", None);
             about.connect_activate(clone!( window, logobuf => move |_, _| {
-                let p = gtk::AboutDialog::new();
-                p.set_authors(&["Sam Whited"]);
-                p.set_copyright("Copyright © 2017 The Communiqué Authors.\nAll rights reserved.");
-                p.set_destroy_with_parent(true);
-                p.set_license_type(gtk::License::Bsd);
-                p.set_logo(&logobuf);
-                p.set_program_name(res::APP_NAME);
-                p.set_skip_pager_hint(true);
-                p.set_skip_taskbar_hint(true);
-                p.set_title(translate!("About"));
-                p.set_transient_for(&window);
-                p.set_type_hint(gdk::WindowTypeHint::Splashscreen);
-                p.set_version(res::VERSION);
-                p.set_website("https://mellium.im");
-                p.set_website_label("mellium.im");
+                let p = ui::about_dialog(&window, &logobuf);
                 p.run();
                 p.destroy();
             }));
