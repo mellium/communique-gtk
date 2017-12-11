@@ -134,13 +134,9 @@ impl App {
                 App::set_stack(&container, None, login_pane.as_ref());
                 login_pane.grab_default();
             } else {
-                // let chat_pane = ui::Chat::new();
-                // switcher = Some(gtk::StackSwitcher::new());
-                // App::set_stack(&container, switcher.as_ref(), chat_pane.as_ref());
-
-                let chat_pane = ui::Spinner::new(&logobuf);
-                switcher = None;
-                App::set_stack(&container, None, chat_pane.as_ref());
+                let chat_pane = ui::Chat::new();
+                switcher = Some(gtk::StackSwitcher::new());
+                App::set_stack(&container, switcher.as_ref(), chat_pane.as_ref());
             }
 
             let hbar = if app.prefers_app_menu() {

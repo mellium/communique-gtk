@@ -14,7 +14,6 @@ lazy_static! {
             "Close"         => "Close",
             "Connect"       => "Connect",
             "Conversations" => "Conversations",
-            "Loading"       => "Loading",
             "Login"         => "Login",
             "Password"      => "Password",
             "Register"      => "Register",
