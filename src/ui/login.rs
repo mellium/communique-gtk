@@ -5,27 +5,31 @@ use gtk::EditableSignals;
 use gtk::EntryExt;
 use gtk::FrameExt;
 use gtk::ImageExt;
+use gtk::StackExt;
 use gtk::StyleContextExt;
 use gtk::WidgetExt;
 
 use gdk_pixbuf;
-use glib::Cast;
 use regex::Regex;
 use res;
 
 /// The Login widget provides a username and password text entry as well as register and login
 /// buttons.
 pub struct Login {
-    view: gtk::Widget,
+    stack: gtk::Stack,
     def: gtk::Button,
 }
 
 impl Login {
     /// Creates a new login pane that can be shown in the application.
     pub fn new(logobuf: &gdk_pixbuf::Pixbuf) -> Login {
+        let stack = gtk::Stack::new();
+
         let frame = gtk::Frame::new(None);
         frame.set_can_focus(false);
         frame.set_shadow_type(gtk::ShadowType::None);
+        let tab = translate!("Login");
+        stack.add_titled(&frame, tab, tab);
 
         let center_box = gtk::Box::new(gtk::Orientation::Vertical, 15);
         center_box.set_can_focus(false);
@@ -110,7 +114,7 @@ impl Login {
         button_box.set_child_packing(&connect, false, false, 0, gtk::PackType::End);
 
         Login {
-            view: frame.upcast::<gtk::Widget>(),
+            stack: stack,
             def: connect,
         }
     }
@@ -121,9 +125,9 @@ impl Login {
     }
 }
 
-impl AsRef<gtk::Widget> for Login {
+impl AsRef<gtk::Stack> for Login {
     #[inline]
-    fn as_ref(&self) -> &gtk::Widget {
-        &self.view
+    fn as_ref(&self) -> &gtk::Stack {
+        &self.stack
     }
 }

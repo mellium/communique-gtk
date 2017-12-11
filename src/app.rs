@@ -21,6 +21,7 @@ use gtk::DialogExt;
 use gtk::GtkApplicationExt;
 use gtk::GtkWindowExt;
 use gtk::SettingsExt;
+use gtk::StackSwitcherExt;
 use gtk::WidgetExt;
 
 use std::convert::From;
@@ -115,21 +116,29 @@ impl App {
             // Show the application menu in the application or the titlebar depending on the desktop
             // environments preference.
             let menu = ui::app_menu();
-            let hbar = if app.prefers_app_menu() {
-                app.set_app_menu(&menu);
-                ui::header_bar(None)
-            } else {
-                ui::header_bar(Some(&menu))
-            };
-            window.set_titlebar(&hbar);
 
             let container = gtk::Box::new(gtk::Orientation::Vertical, 0);
             window.add(&container);
+
+            let switcher: Option<gtk::StackSwitcher>;
             if config.accounts.is_empty() {
                 let login_pane = ui::Login::new(&logobuf);
-                App::set_view(&container, login_pane.as_ref());
+                switcher = None;
+                App::set_stack(&container, None, login_pane.as_ref());
                 login_pane.grab_default();
+            } else {
+                let chat_pane = ui::Chat::new();
+                switcher = Some(gtk::StackSwitcher::new());
+                App::set_stack(&container, switcher.as_ref(), chat_pane.as_ref());
             }
+
+            let hbar = if app.prefers_app_menu() {
+                app.set_app_menu(&menu);
+                ui::header_bar(None, switcher.as_ref())
+            } else {
+                ui::header_bar(Some(&menu), switcher.as_ref())
+            };
+            window.set_titlebar(&hbar);
 
             app.add_window(&window);
             window.show_all();
@@ -141,13 +150,20 @@ impl App {
     }
 
     /// Sets the main view of the application window.
-    fn set_view<T: gtk::IsA<gtk::Widget>>(container: &gtk::Box, widget: &T) {
+    fn set_stack<'a, T: Into<Option<&'a gtk::StackSwitcher>>>(
+        container: &gtk::Box,
+        switcher: T,
+        stack: &gtk::Stack,
+    ) {
         for w in container.get_children() {
             container.remove(&w);
         }
 
-        container.add(widget);
-        container.set_child_packing(widget, true, true, 0, gtk::PackType::Start);
+        if let Some(switcher) = switcher.into() {
+            switcher.set_stack(stack);
+        }
+        container.add(stack);
+        container.set_child_packing(stack, true, true, 0, gtk::PackType::Start);
     }
 
     /// Run the application.
