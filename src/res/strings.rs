@@ -15,13 +15,17 @@ lazy_static! {
             "Connect"       => "Connect",
             "Conversations" => "Conversations",
             "Login"         => "Login",
+            "Open Source"   => "Open Source",
             "Password"      => "Password",
             "Register"      => "Register",
             "Roster"        => "Roster",
-            "Open Source"   => "Open Source",
 
             // Lower
             "user" => "user",
+
+            // Mixed
+            "Hide password" => "Hide password",
+            "Show password" => "Show password",
         },
     };
 }
