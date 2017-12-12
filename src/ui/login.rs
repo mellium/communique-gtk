@@ -11,6 +11,7 @@ use gtk::WidgetExt;
 use gdk_pixbuf;
 use regex::Regex;
 use res;
+use ui::password;
 
 /// The Login widget provides a username and password text entry as well as register and login
 /// buttons.
@@ -70,55 +71,7 @@ impl Login {
             }
         });
 
-
-        let iconloader = gdk_pixbuf::PixbufLoader::new();
-        iconloader.loader_write(res::ICON_VISIBILITY).unwrap();
-        iconloader.close().unwrap();
-        let visibility = iconloader.get_pixbuf().unwrap();
-
-        let iconloader = gdk_pixbuf::PixbufLoader::new();
-        iconloader.loader_write(res::ICON_VISIBILITY_OFF).unwrap();
-        iconloader.close().unwrap();
-        let visibility_off = iconloader.get_pixbuf().unwrap();
-
-        let pass_entry = gtk::Entry::new();
-        pass_entry.set_placeholder_text(translate!("Password"));
-        pass_entry.set_input_purpose(gtk::InputPurpose::Password);
-        pass_entry.set_visibility(false);
-        pass_entry.set_activates_default(true);
-        pass_entry.set_icon_from_pixbuf(
-            gtk::EntryIconPosition::Primary,
-            &visibility,
-        );
-        pass_entry.set_icon_tooltip_text(
-            gtk::EntryIconPosition::Primary,
-            translate!("Show password"),
-        );
-        pass_entry.connect_icon_press(clone!( pass_entry, visibility, visibility_off => move |_, _, _| {
-            let v = pass_entry.get_icon_tooltip_text(gtk::EntryIconPosition::Primary);
-            if v.is_some() && v.unwrap() == translate!("Show password") {
-                pass_entry.set_icon_from_pixbuf(
-                    gtk::EntryIconPosition::Primary,
-                    &visibility_off,
-                );
-                pass_entry.set_icon_tooltip_text(
-                    gtk::EntryIconPosition::Primary,
-                    translate!("Hide password"),
-                );
-                pass_entry.set_visibility(true);
-            } else {
-                    pass_entry.set_icon_from_pixbuf(
-                        gtk::EntryIconPosition::Primary,
-                        &visibility,
-                    );
-                    pass_entry.set_icon_tooltip_text(
-                        gtk::EntryIconPosition::Primary,
-                        translate!("Show password"),
-                    );
-                    pass_entry.set_visibility(false);
-            }
-        }));
-        pass_entry.set_icon_activatable(gtk::EntryIconPosition::Primary, true);
+        let pass_entry = password::pass_entry();
         entry_box.add(&pass_entry);
         // Perform some simple length checks on the password entry field.
         if res::SUGGESTED_PASSWORD_LEN > 0.0 {
