@@ -1,4 +1,5 @@
 use gtk;
+use gtk::ActionableExt;
 use gtk::BoxExt;
 use gtk::ContainerExt;
 use gtk::EditableSignals;
@@ -89,10 +90,10 @@ impl Login {
         center_box.add(&button_box);
 
         let connect = gtk::Button::new_with_label(translate!("Connect"));
+        connect.set_action_name("app.login");
         connect.set_can_default(true);
-        match connect.get_style_context() {
-            None => {}
-            Some(c) => c.add_class("suggested-action"),
+        if let Some(c) = connect.get_style_context() {
+            c.add_class("suggested-action");
         }
 
         let register = gtk::Button::new_with_label(translate!("Register"));

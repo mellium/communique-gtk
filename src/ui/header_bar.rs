@@ -10,15 +10,10 @@ use gtk::MenuButtonExt;
 use gtk::WidgetExt;
 
 /// Constructs and populates the main header bar.
-pub fn header_bar<'a, P: gtk::IsA<gtk::Widget> + 'a, Q: Into<Option<&'a P>>>(
-    appmenu: Option<&gio::Menu>,
-    title_widget: Q,
-) -> gtk::HeaderBar {
+pub fn header_bar(appmenu: Option<&gio::Menu>) -> gtk::HeaderBar {
     let hbar = gtk::HeaderBar::new();
 
     hbar.set_title(res::APP_NAME);
-
-    hbar.set_custom_title(title_widget);
 
     if let Some(menu) = appmenu {
         let context_button = gtk::MenuButton::new();
@@ -32,7 +27,8 @@ pub fn header_bar<'a, P: gtk::IsA<gtk::Widget> + 'a, Q: Into<Option<&'a P>>>(
     new_button.set_sensitive(false);
     hbar.add(&new_button);
 
-    let search = gtk::Button::new_from_icon_name("system-search-symbolic", gtk::IconSize::Button.into());
+    let search =
+        gtk::Button::new_from_icon_name("system-search-symbolic", gtk::IconSize::Button.into());
     search.set_action_name("win.search");
     hbar.pack_end(&search);
 

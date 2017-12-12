@@ -3,6 +3,7 @@ mod app_menu;
 mod chat;
 mod header_bar;
 mod login;
+mod roster;
 
 pub use self::about::about_dialog;
 pub use self::app_menu::app_menu;

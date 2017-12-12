@@ -20,8 +20,8 @@ use gtk::CssProviderExt;
 use gtk::DialogExt;
 use gtk::GtkApplicationExt;
 use gtk::GtkWindowExt;
+use gtk::HeaderBarExt;
 use gtk::SettingsExt;
-use gtk::StackSwitcherExt;
 use gtk::WidgetExt;
 
 use std::convert::From;
@@ -126,27 +126,26 @@ impl App {
             let container = gtk::Box::new(gtk::Orientation::Vertical, 0);
             window.add(&container);
 
-            let switcher: Option<gtk::StackSwitcher>;
-            if config.accounts.is_empty() {
-                let login_pane = ui::Login::new(&logobuf);
-                switcher = None;
-                App::set_view(&container, login_pane.as_ref());
-                login_pane.grab_default();
-            } else {
-                let chat_pane = ui::Chat::new();
-                let s = gtk::StackSwitcher::new();
-                s.set_stack(chat_pane.as_ref());
-                switcher = Some(s);
-                App::set_view(&container, chat_pane.as_ref());
-            }
-
             let hbar = if app.prefers_app_menu() {
                 app.set_app_menu(&menu);
-                ui::header_bar(None, switcher.as_ref())
+                ui::header_bar(None)
             } else {
-                ui::header_bar(Some(&menu), switcher.as_ref())
+                ui::header_bar(Some(&menu))
             };
             window.set_titlebar(&hbar);
+
+            if config.accounts.is_empty() {
+                App::show_login(&container, &logobuf);
+            } else {
+                App::show_chat(&container, &hbar);
+            }
+
+            // Connect action
+            let connect = gio::SimpleAction::new("login", None);
+            connect.connect_activate(clone!( container, hbar => move |_, _| {
+                App::show_chat(&container, &hbar);
+            }));
+            app.add_action(&connect);
 
             app.add_window(&window);
             window.show_all();
@@ -154,6 +153,18 @@ impl App {
 
         me.app.register(None)?;
         Ok(me)
+    }
+
+    fn show_login(container: &gtk::Box, logobuf: &gdk_pixbuf::Pixbuf) {
+        let login_pane = ui::Login::new(logobuf);
+        App::set_view(&container, login_pane.as_ref());
+        login_pane.grab_default();
+    }
+
+    fn show_chat(container: &gtk::Box, hbar: &gtk::HeaderBar) {
+        let chat = ui::Chat::new();
+        hbar.set_custom_title(AsRef::<gtk::StackSwitcher>::as_ref(&chat));
+        App::set_view(&container, AsRef::<gtk::Stack>::as_ref(&chat));
     }
 
     /// Sets the main view of the application window.
