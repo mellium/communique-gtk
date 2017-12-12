@@ -2,6 +2,7 @@ use gio;
 use res;
 
 use gtk;
+use gtk::ActionableExt;
 use gtk::ButtonExt;
 use gtk::ContainerExt;
 use gtk::HeaderBarExt;
@@ -31,8 +32,8 @@ pub fn header_bar<'a, P: gtk::IsA<gtk::Widget> + 'a, Q: Into<Option<&'a P>>>(
     new_button.set_sensitive(false);
     hbar.add(&new_button);
 
-    let search = gtk::SearchEntry::new();
-    search.set_sensitive(false);
+    let search = gtk::Button::new_from_icon_name("system-search-symbolic", gtk::IconSize::Button.into());
+    search.set_action_name("win.search");
     hbar.pack_end(&search);
 
     hbar

@@ -11,3 +11,4 @@ The following GIO actions are defined:
 
 * `app.about` — launches the about dialog
 * `app.close` — closes the application
+* `win.search` — toggle the search bar
