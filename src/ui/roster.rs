@@ -17,9 +17,7 @@ impl Roster {
         paned.add1(&frame1);
         paned.add2(&frame2);
 
-        Roster {
-            view: paned,
-        }
+        Roster { view: paned }
     }
 }
 
