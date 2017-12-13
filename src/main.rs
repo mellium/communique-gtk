@@ -1,12 +1,22 @@
-//! # Communiqué
-//!
 //! A instant messaging client in Rust and GTK3+.
 //!
 //! Communiqué works with instant messaging services that support the Extensible Messaging and
 //! Presence Protocol (XMPP), historically known as "Jabber".
+//!
+//! ## Developers
+//!
+//! ### GIO Actions
+//!
+//! The following GIO actions are defined:
+//!
+//! - `app.about` — launches the about dialog
+//! - `app.close` — closes the application
+//! - `win.search` — toggle the search bar
 
 #![crate_type = "bin"]
 #![feature(proc_macro)]
+#![doc(html_logo_url = "https://www.rust-lang.org/logos/rust-logo-128x128-blk-v2.png",
+       html_favicon_url = "https://www.rust-lang.org/favicon.ico", html_root_url = "/")]
 
 #[macro_use]
 extern crate lazy_static;
