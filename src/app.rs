@@ -163,8 +163,8 @@ impl App {
 
     fn show_chat(container: &gtk::Box, hbar: &gtk::HeaderBar) {
         let chat = ui::Chat::new();
-        hbar.set_custom_title(AsRef::<gtk::StackSwitcher>::as_ref(&chat));
-        App::set_view(container, AsRef::<gtk::Stack>::as_ref(&chat));
+        hbar.set_custom_title(chat.as_ref());
+        App::set_view(&container, chat.get_stack());
     }
 
     /// Sets the main view of the application window.

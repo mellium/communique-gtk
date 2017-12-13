@@ -27,16 +27,14 @@ impl Chat {
         stack.add_titled(&chats, chats_name, chats_name);
 
         Chat {
-            stack: stack,
             switcher: switcher,
+            stack: stack,
         }
     }
-}
 
-impl AsRef<gtk::Stack> for Chat {
-    #[inline]
-    fn as_ref(&self) -> &gtk::Stack {
-        &self.stack
+    /// Gets the underlying stack.
+    pub fn get_stack(&self) -> &gtk::Stack {
+        return &self.stack;
     }
 }
 
