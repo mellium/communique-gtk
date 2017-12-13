@@ -1,6 +1,7 @@
 use gtk;
 use gtk::StackExt;
 use gtk::StackSwitcherExt;
+use gtk::WidgetExt;
 
 use ui::roster::Roster;
 
@@ -26,21 +27,22 @@ impl Chat {
         stack.add_titled(roster.as_ref(), roster_name, roster_name);
         stack.add_titled(&chats, chats_name, chats_name);
 
+        stack.show_all();
+        switcher.show_all();
+
         Chat {
-            switcher: switcher,
             stack: stack,
+            switcher: switcher,
         }
     }
 
     /// Gets the underlying stack.
-    pub fn get_stack(&self) -> &gtk::Stack {
-        return &self.stack;
+    pub fn stack(&self) -> &gtk::Stack {
+        &self.stack
     }
-}
 
-impl AsRef<gtk::StackSwitcher> for Chat {
-    #[inline]
-    fn as_ref(&self) -> &gtk::StackSwitcher {
+    /// Gets the underlying stack switcher.
+    pub fn switcher(&self) -> &gtk::StackSwitcher {
         &self.switcher
     }
 }
