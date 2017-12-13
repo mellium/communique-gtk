@@ -164,7 +164,7 @@ impl App {
     fn show_chat(container: &gtk::Box, hbar: &gtk::HeaderBar) {
         let chat = ui::Chat::new();
         hbar.set_custom_title(chat.switcher());
-        App::set_view(container, chat.stack());
+        App::set_view(container, chat.as_ref());
     }
 
     /// Sets the main view of the application window.

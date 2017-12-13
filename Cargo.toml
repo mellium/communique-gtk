@@ -23,4 +23,4 @@ toml = "0.4"
 
 [dependencies.gtk]
 version = "0.3"
-features = ["v3_14"]
+features = ["v3_16"]

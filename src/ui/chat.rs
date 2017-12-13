@@ -36,13 +36,15 @@ impl Chat {
         }
     }
 
-    /// Gets the underlying stack.
-    pub fn stack(&self) -> &gtk::Stack {
-        &self.stack
-    }
-
     /// Gets the underlying stack switcher.
     pub fn switcher(&self) -> &gtk::StackSwitcher {
         &self.switcher
+    }
+}
+
+impl AsRef<gtk::Stack> for Chat {
+    #[inline]
+    fn as_ref(&self) -> &gtk::Stack {
+        &self.stack
     }
 }

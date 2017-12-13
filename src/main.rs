@@ -11,6 +11,7 @@
 //!
 //! - `app.about` — launches the about dialog
 //! - `app.close` — closes the application
+//! - `app.login` — login all active but offline accounts
 //! - `win.search` — toggle the search bar
 
 #![crate_type = "bin"]
