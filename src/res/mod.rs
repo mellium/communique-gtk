@@ -13,9 +13,3 @@ pub const SVG_LOGO: &[u8] = include_bytes!("../../img/logo_concept_4_plain.svg")
 
 pub const STYLE_MAIN: &[u8] = include_bytes!("../../style/main.css");
 pub const STYLE_CONVERSATIONS: &[u8] = include_bytes!("../../style/conversations.css");
-
-pub const ICON_VISIBILITY: &[u8] = include_bytes!("../../img/ic_visibility_black_48px.svg");
-pub const ICON_VISIBILITY_OFF: &[u8] = include_bytes!("../../img/ic_visibility_off_black_48px.svg");
-pub const ICON_VISIBILITY_LIGHT: &[u8] = include_bytes!("../../img/ic_visibility_white_48px.svg");
-pub const ICON_VISIBILITY_OFF_LIGHT: &[u8] =
-    include_bytes!("../../img/ic_visibility_off_white_48px.svg");
