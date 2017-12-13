@@ -56,7 +56,7 @@ impl Login {
             None => {
                 entry.set_icon_from_icon_name(
                     gtk::EntryIconPosition::Secondary,
-                    Some("dialog-warning-symbolic"),
+                    "dialog-warning-symbolic",
                 );
             }
             Some(text) => {
