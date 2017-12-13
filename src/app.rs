@@ -157,14 +157,14 @@ impl App {
 
     fn show_login(container: &gtk::Box, logobuf: &gdk_pixbuf::Pixbuf) {
         let login_pane = ui::Login::new(logobuf);
-        App::set_view(&container, login_pane.as_ref());
+        App::set_view(container, login_pane.as_ref());
         login_pane.grab_default();
     }
 
     fn show_chat(container: &gtk::Box, hbar: &gtk::HeaderBar) {
         let chat = ui::Chat::new();
         hbar.set_custom_title(AsRef::<gtk::StackSwitcher>::as_ref(&chat));
-        App::set_view(&container, AsRef::<gtk::Stack>::as_ref(&chat));
+        App::set_view(container, AsRef::<gtk::Stack>::as_ref(&chat));
     }
 
     /// Sets the main view of the application window.

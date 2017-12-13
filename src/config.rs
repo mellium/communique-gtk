@@ -46,15 +46,15 @@ impl From<toml::de::Error> for InnerError {
 
 impl fmt::Display for InnerError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        match self {
-            &InnerError::De(ref err) => err.fmt(f),
-            &InnerError::Io(ref err) => err.fmt(f),
+        match *self {
+            InnerError::De(ref err) => err.fmt(f),
+            InnerError::Io(ref err) => err.fmt(f),
         }
     }
 }
 
-/// An error type that will be returned by load_config that contains information about the state of
-/// the application when the failure occured and contains the underlying error.
+/// An error type that will be returned by `load_config` that contains information about the state
+/// of the application when the failure occured and contains the underlying error.
 #[derive(Debug)]
 pub struct Error {
     path: Option<path::PathBuf>,
