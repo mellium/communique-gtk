@@ -1,3 +1,5 @@
+use gdk::ContextExt;
+
 use gdk_pixbuf;
 
 use gtk;
@@ -84,12 +86,13 @@ const KB: f64 = 0.114;
 const Y: f64 = 0.731;
 const BLEND_FACTOR: f64 = 0.2;
 
-fn contact<'a, P: Into<Option<&'a gdk_pixbuf::Pixbuf>>>(name: &str, _avatar: P) -> gtk::Box {
+fn contact<'a, P: Into<Option<&'a gdk_pixbuf::Pixbuf>>>(name: &str, avatar: P) -> gtk::Box {
     let vbox = gtk::Box::new(gtk::Orientation::Vertical, 12);
 
     let mut hasher = DefaultHasher::new();
     name.hash(&mut hasher);
     let h = hasher.finish();
+
     let angle = ((h & (0xffff << 48)) >> 48) as f64 / 65536.0 * 2.0 * f64::consts::PI;
     let (cb, cr) = angle.sin_cos();
     let factor = cr.abs().max(cb.abs());
@@ -100,21 +103,30 @@ fn contact<'a, P: Into<Option<&'a gdk_pixbuf::Pixbuf>>>(name: &str, _avatar: P) 
 
     let drawing = gtk::DrawingArea::new();
     drawing.set_size_request(128, 128);
-    drawing.connect_draw(move |widget, ctx| {
-        // If we can get a style_context, blend the color with the background.
-        let (rb, bb, gb) = if let Some(style_context) = widget.get_style_context() {
-            let bg = style_context.get_background_color(style_context.get_state());
-            let r = BLEND_FACTOR * (1.0 - bg.red) + (1.0 - BLEND_FACTOR) * r;
-            let b = BLEND_FACTOR * (1.0 - bg.blue) + (1.0 - BLEND_FACTOR) * b;
-            let g = BLEND_FACTOR * (1.0 - bg.green) + (1.0 - BLEND_FACTOR) * g;
-            (r, b, g)
-        } else {
-            (r, b, g)
-        };
-        ctx.set_source_rgba(rb, gb, bb, 1.0);
-        ctx.paint();
-        gtk::Inhibit(true)
-    });
+    if let Some(pic) = avatar.into() {
+        drawing.connect_draw(clone!( pic => move |_, ctx| {
+            ctx.set_source_pixbuf(&pic, 0.0, 0.0);
+            ctx.paint();
+            gtk::Inhibit(true)
+        }));
+    } else {
+        drawing.connect_draw(move |widget, ctx| {
+            // If we can get a style_context, blend the color with the background.
+            let (rb, bb, gb) = match widget.get_style_context() {
+                Some(style_context) => {
+                    let bg = style_context.get_background_color(style_context.get_state());
+                    let r = BLEND_FACTOR * (1.0 - bg.red) + (1.0 - BLEND_FACTOR) * r;
+                    let b = BLEND_FACTOR * (1.0 - bg.blue) + (1.0 - BLEND_FACTOR) * b;
+                    let g = BLEND_FACTOR * (1.0 - bg.green) + (1.0 - BLEND_FACTOR) * g;
+                    (r, b, g)
+                }
+                None => (r, b, g),
+            };
+            ctx.set_source_rgb(rb, gb, bb);
+            ctx.paint();
+            gtk::Inhibit(true)
+        });
+    }
 
     let name_label = gtk::Label::new(name);
 
