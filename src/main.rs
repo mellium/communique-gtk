@@ -31,8 +31,10 @@ extern crate gio;
 extern crate glib;
 extern crate gtk;
 extern crate pango;
+extern crate pangocairo;
 extern crate regex;
 extern crate toml;
+extern crate unicode_segmentation;
 
 #[macro_use]
 mod macros;
