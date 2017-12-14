@@ -6,6 +6,7 @@ use gtk::FrameExt;
 use gtk::ListBoxExt;
 use gtk::PanedExt;
 use gtk::StackSidebarExt;
+use gtk::StyleContextExt;
 use gtk::WidgetExt;
 
 use std::collections::hash_map::DefaultHasher;
@@ -39,7 +40,6 @@ impl Roster {
         scroll.add(&list);
         stack.add(&scroll);
 
-
         let names = vec![
             "Beautiful",
             "Catchup",
@@ -55,12 +55,15 @@ impl Roster {
             "Twinkle Toes",
             "Zodiac",
         ];
-        names.iter().inspect(|name| {
-            let lbr = gtk::ListBoxRow::new();
-            let c = contact(name, None);
-            lbr.add(&c);
-            list.insert(&lbr, -1);
-        }).count();
+        names
+            .iter()
+            .inspect(|name| {
+                let lbr = gtk::ListBoxRow::new();
+                let c = contact(name, None);
+                lbr.add(&c);
+                list.insert(&lbr, -1);
+            })
+            .count();
 
         paned.show_all();
 
@@ -79,6 +82,7 @@ const KR: f64 = 0.299;
 const KG: f64 = 0.587;
 const KB: f64 = 0.114;
 const Y: f64 = 0.731;
+const BLEND_FACTOR: f64 = 0.2;
 
 fn contact<'a, P: Into<Option<&'a gdk_pixbuf::Pixbuf>>>(name: &str, _avatar: P) -> gtk::Box {
     let vbox = gtk::Box::new(gtk::Orientation::Vertical, 12);
@@ -96,8 +100,18 @@ fn contact<'a, P: Into<Option<&'a gdk_pixbuf::Pixbuf>>>(name: &str, _avatar: P) 
 
     let drawing = gtk::DrawingArea::new();
     drawing.set_size_request(128, 128);
-    drawing.connect_draw(move |_, ctx| {
-        ctx.set_source_rgba(r, g, b, 1.0);
+    drawing.connect_draw(move |widget, ctx| {
+        // If we can get a style_context, blend the color with the background.
+        let (rb, bb, gb) = if let Some(style_context) = widget.get_style_context() {
+            let bg = style_context.get_background_color(style_context.get_state());
+            let r = BLEND_FACTOR * (1.0 - bg.red) + (1.0 - BLEND_FACTOR) * r;
+            let b = BLEND_FACTOR * (1.0 - bg.blue) + (1.0 - BLEND_FACTOR) * b;
+            let g = BLEND_FACTOR * (1.0 - bg.green) + (1.0 - BLEND_FACTOR) * g;
+            (r, b, g)
+        } else {
+            (r, b, g)
+        };
+        ctx.set_source_rgba(rb, gb, bb, 1.0);
         ctx.paint();
         gtk::Inhibit(true)
     });
