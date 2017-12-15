@@ -10,13 +10,12 @@ readme = "README.md"
 keywords = ["chat", "xmpp", "jabber"]
 
 [dependencies]
+cairo-rs = "0.3"
 gdk = "0.7"
 gdk-pixbuf = "0.3"
 gio = "0.3"
 glib = "0.4"
 lazy_static = "1.0.0"
-pango = "0.3"
-pangocairo = "0.4"
 regex = "0.2"
 serde = "1.0"
 serde_derive = "1.0"
