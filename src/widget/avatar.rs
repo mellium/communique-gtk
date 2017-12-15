@@ -59,14 +59,17 @@ pub fn avatar<'a, P: Into<Option<&'a gdk_pixbuf::Pixbuf>>>(name: &str, avatar: P
                 }
                 None => (r, b, g),
             };
+            let (width, height) = (widget.get_allocated_width(), widget.get_allocated_height());
             ctx.set_source_rgb(rb, gb, bb);
-            ctx.paint();
+            let size = f64::from(width.min(height));
+            let half = size/2.0;
+            ctx.rectangle(f64::from(width)/2.0-half, f64::from(height)/2.0-half, size, size);
+            ctx.fill();
 
             if !first.is_empty() {
                 ctx.select_font_face("Sans", cairo::FontSlant::Normal, cairo::FontWeight::Normal);
                 ctx.set_font_size(48.0);
                 let extents = ctx.text_extents(&first[..]);
-                let (width, height) = (widget.get_allocated_width(), widget.get_allocated_height());
                 let x = f64::from(width)/2.0 - (extents.width/2.0 + extents.x_bearing);
                 let y = f64::from(height)/2.0 - (extents.height/2.0 + extents.y_bearing);
                 ctx.move_to(x, y);
