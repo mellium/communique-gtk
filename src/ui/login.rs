@@ -11,7 +11,7 @@ use gtk::WidgetExt;
 use gdk_pixbuf;
 use regex::Regex;
 use res;
-use ui::password;
+use widget;
 
 /// The Login widget provides a username and password text entry as well as register and login
 /// buttons.
@@ -71,7 +71,7 @@ impl Login {
             }
         });
 
-        let pass_entry = password::pass_entry();
+        let pass_entry = widget::pass_entry();
         entry_box.add(&pass_entry);
         // Perform some simple length checks on the password entry field.
         if res::SUGGESTED_PASSWORD_LEN > 0.0 {

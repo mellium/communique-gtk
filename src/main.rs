@@ -43,6 +43,7 @@ mod app;
 mod config;
 mod res;
 mod ui;
+mod widget;
 
 use std::process;
 use std::env::args;
