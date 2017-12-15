@@ -1,7 +1,7 @@
 use gtk;
 use gtk::ContainerExt;
+use gtk::FlowBoxExt;
 use gtk::FrameExt;
-use gtk::GridExt;
 use gtk::PanedExt;
 use gtk::StackExt;
 use gtk::StackSidebarExt;
@@ -32,46 +32,35 @@ impl Roster {
         frame2.add(&stack);
 
         let scroll = gtk::ScrolledWindow::new(None, None);
-        let grid = gtk::Grid::new();
-        grid.set_row_homogeneous(true);
-        grid.set_column_homogeneous(true);
-        grid.set_row_spacing(12);
-        grid.set_column_spacing(12);
-        grid.insert_column(0);
-        grid.insert_column(1);
-        grid.insert_column(2);
-        scroll.add(&grid);
+        let flow = gtk::FlowBox::new();
+        flow.set_property_homogeneous(true);
+        scroll.add(&flow);
         stack.add_titled(&scroll, "All", "All");
 
-        let names = vec![
+        vec![
             "Beautiful",
             "Catchup",
             "Dandelion",
+            "Deadwood",
             "Fuego Borrego",
             "Green Giant",
             "Mailman",
+            "Mississippi Mule",
             "Papa Shrimp",
             "Pockets",
             "Poison Ivey",
             "Shrimpette",
             "Spoon Foot",
+            "Stoked",
             "Sunshine",
             "Thespian",
-            "Twinkle Toes",
+            "Twinkletoes",
             "Utah Red",
             "Wired",
             "Zodiac",
-        ];
-        let mut x = 0;
-        let mut y = 0;
-        names.iter().for_each(|name| {
+        ].iter().for_each(|name| {
             let c = widget::avatar(name, None);
-            grid.attach(&c, x, y, 1, 1);
-            x += 1;
-            if x % 3 == 0 {
-                y += 1;
-                x = 0;
-            }
+            flow.add(&c);
         });
 
         paned.show_all();
