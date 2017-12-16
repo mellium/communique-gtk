@@ -3,8 +3,6 @@ use gtk::ContainerExt;
 use gtk::FlowBoxExt;
 use gtk::FrameExt;
 use gtk::PanedExt;
-use gtk::StackExt;
-use gtk::StackSidebarExt;
 use gtk::WidgetExt;
 
 use widget;
@@ -24,19 +22,7 @@ impl Roster {
         paned.add1(&frame1);
         paned.add2(&frame2);
 
-        let sidebar = gtk::StackSidebar::new();
-        let stack = gtk::Stack::new();
-        sidebar.set_stack(&stack);
-
-        frame1.add(&sidebar);
-        frame2.add(&stack);
-
-        let scroll = gtk::ScrolledWindow::new(None, None);
         let flow = gtk::FlowBox::new();
-        flow.set_property_homogeneous(true);
-        scroll.add(&flow);
-        stack.add_titled(&scroll, "All", "All");
-
         vec![
             "Beautiful",
             "Catchup",
@@ -58,10 +44,35 @@ impl Roster {
             "Utah Red",
             "Wired",
             "Zodiac",
-        ].iter().for_each(|name| {
-            let c = widget::avatar(name, None);
-            flow.add(&c);
-        });
+        ].iter()
+            .for_each(|name| {
+                let c = widget::avatar(name, None);
+                flow.add(&c);
+            });
+        flow.set_property_homogeneous(true);
+        let flow2 = gtk::FlowBox::new();
+        vec![
+            "Mailman",
+            "Beautiful",
+            "Fuego Borrego",
+            "Green Giant",
+            "Deadwood",
+            "Dandelion",
+            "Catchup",
+        ].iter()
+            .for_each(|name| {
+                let c = widget::avatar(name, None);
+                flow2.add(&c);
+            });
+        flow2.set_property_homogeneous(true);
+        let mut sections = widget::SectionList::new();
+        sections.add(translate!("Roster"), &flow);
+        sections.add(translate!("Conferences"), &flow2);
+        let scroll = sections.view();
+        let list = sections.listbox();
+
+        frame1.add(list);
+        frame2.add(scroll);
 
         paned.show_all();
 

@@ -6,12 +6,13 @@ lazy_static! {
     pub static ref STRINGS: HashMap<&'static str, HashMap<&'static str, &'static str>> = translate!{
         "en-us" => translate!{
             // Low-level GTK errors
-            "failed_to_start_gtk" => "Failed to initialize GTK",
-            "error_registering_app"   => "Error registering application",
+            "failed_to_start_gtk"   => "Failed to initialize GTK",
+            "error_registering_app" => "Error registering application",
 
             // Upper
             "About"         => "About",
             "Close"         => "Close",
+            "Conferences"   => "Conferences",
             "Connect"       => "Connect",
             "Conversations" => "Conversations",
             "Login"         => "Login",
