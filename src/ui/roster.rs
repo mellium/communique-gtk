@@ -1,5 +1,6 @@
 use gtk;
 use gtk::ContainerExt;
+use gtk::FlowBoxExt;
 use gtk::FrameExt;
 use gtk::PanedExt;
 use gtk::WidgetExt;
@@ -50,7 +51,8 @@ impl Roster {
                     let c = widget::avatar(name, None);
                     flow.add(&c);
                 });
-            sections.add(translate!("Roster"), &flow);
+            flow.set_property_homogeneous(true);
+            sections.add(translate!("Conversations"), &flow);
         }
         {
             let flow = gtk::FlowBox::new();
@@ -66,7 +68,19 @@ impl Roster {
                     let c = widget::avatar(name, None);
                     flow.add(&c);
                 });
+            flow.set_property_homogeneous(true);
             sections.add(translate!("Conferences"), &flow);
+        }
+        {
+            let flow = gtk::FlowBox::new();
+            vec!["Carson", "Dan", "Jo", "Stephen", "Walker"]
+                .iter()
+                .for_each(|name| {
+                    let c = widget::avatar(name, None);
+                    flow.add(&c);
+                });
+            flow.set_property_homogeneous(true);
+            sections.add("Family", &flow);
         }
         let scroll = sections.view();
         let list = sections.listbox();
