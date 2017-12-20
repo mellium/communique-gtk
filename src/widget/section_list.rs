@@ -45,7 +45,9 @@ impl<'a> SectionList<'a> {
             style_context.add_class("selectlabel");
             let provider = gtk::CssProvider::new();
             match provider.load_from_data(res::STYLE_LIST) {
-                Ok(_) => style_context.add_provider(&provider, gtk::STYLE_PROVIDER_PRIORITY_APPLICATION),
+                Ok(_) => {
+                    style_context.add_provider(&provider, gtk::STYLE_PROVIDER_PRIORITY_APPLICATION)
+                }
                 Err(err) => eprintln!("error loading style provider for list: {}", err),
             }
         }
@@ -59,7 +61,9 @@ impl<'a> SectionList<'a> {
             style_context.add_class("title");
             let provider = gtk::CssProvider::new();
             match provider.load_from_data(res::STYLE_LIST) {
-                Ok(_) => style_context.add_provider(&provider, gtk::STYLE_PROVIDER_PRIORITY_APPLICATION),
+                Ok(_) => {
+                    style_context.add_provider(&provider, gtk::STYLE_PROVIDER_PRIORITY_APPLICATION)
+                }
                 Err(err) => eprintln!("error loading style provider for list: {}", err),
             }
         }

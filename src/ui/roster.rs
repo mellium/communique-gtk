@@ -1,6 +1,5 @@
 use gtk;
 use gtk::ContainerExt;
-use gtk::FlowBoxExt;
 use gtk::FrameExt;
 use gtk::PanedExt;
 use gtk::WidgetExt;
@@ -22,52 +21,53 @@ impl Roster {
         paned.add1(&frame1);
         paned.add2(&frame2);
 
-        let flow = gtk::FlowBox::new();
-        vec![
-            "Beautiful",
-            "Catchup",
-            "Dandelion",
-            "Deadwood",
-            "Fuego Borrego",
-            "Green Giant",
-            "Mailman",
-            "Mississippi Mule",
-            "Papa Shrimp",
-            "Pockets",
-            "Poison Ivey",
-            "Shrimpette",
-            "Spoon Foot",
-            "Stoked",
-            "Sunshine",
-            "Thespian",
-            "Twinkletoes",
-            "Utah Red",
-            "Wired",
-            "Zodiac",
-        ].iter()
-            .for_each(|name| {
-                let c = widget::avatar(name, None);
-                flow.add(&c);
-            });
-        flow.set_property_homogeneous(true);
-        let flow2 = gtk::FlowBox::new();
-        vec![
-            "Mailman",
-            "Beautiful",
-            "Fuego Borrego",
-            "Green Giant",
-            "Deadwood",
-            "Dandelion",
-            "Catchup",
-        ].iter()
-            .for_each(|name| {
-                let c = widget::avatar(name, None);
-                flow2.add(&c);
-            });
-        flow2.set_property_homogeneous(true);
         let mut sections = widget::SectionList::new();
-        sections.add(translate!("Roster"), &flow);
-        sections.add(translate!("Conferences"), &flow2);
+        {
+            let flow = gtk::FlowBox::new();
+            vec![
+                "Beautiful",
+                "Catchup",
+                "Dandelion",
+                "Deadwood",
+                "Fuego Borrego",
+                "Green Giant",
+                "Mailman",
+                "Mississippi Mule",
+                "Papa Shrimp",
+                "Pockets",
+                "Poison Ivey",
+                "Shrimpette",
+                "Spoon Foot",
+                "Stoked",
+                "Sunshine",
+                "Thespian",
+                "Twinkletoes",
+                "Utah Red",
+                "Wired",
+                "Zodiac",
+            ].iter()
+                .for_each(|name| {
+                    let c = widget::avatar(name, None);
+                    flow.add(&c);
+                });
+            sections.add(translate!("Roster"), &flow);
+        }
+        {
+            let flow = gtk::FlowBox::new();
+            vec![
+                "AT Class of 2014",
+                "Cars & Coffee",
+                "Conversations",
+                "Mellium Devs",
+                "XMPP Council Room",
+                "XSF Discussion Room",
+            ].iter()
+                .for_each(|name| {
+                    let c = widget::avatar(name, None);
+                    flow.add(&c);
+                });
+            sections.add(translate!("Conferences"), &flow);
+        }
         let scroll = sections.view();
         let list = sections.listbox();
 
