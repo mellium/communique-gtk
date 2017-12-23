@@ -1,17 +1,18 @@
 use cairo;
 use gdk::ContextExt;
 use gdk_pixbuf;
-
 use gtk;
 use gtk::ContainerExt;
+use gtk::CssProviderExt;
 use gtk::StyleContextExt;
 use gtk::WidgetExt;
-
 use unicode_segmentation::UnicodeSegmentation;
 
 use std::collections::hash_map::DefaultHasher;
 use std::f64;
 use std::hash::{Hash, Hasher};
+
+use res;
 
 const KR: f64 = 0.299;
 const KG: f64 = 0.587;
@@ -21,6 +22,16 @@ const BLEND_FACTOR: f64 = 0.2;
 
 pub fn avatar<'a, P: Into<Option<&'a gdk_pixbuf::Pixbuf>>>(name: &str, avatar: P) -> gtk::Box {
     let vbox = gtk::Box::new(gtk::Orientation::Vertical, 12);
+    if let Some(style_context) = vbox.get_style_context() {
+        style_context.add_class("avatar");
+        let provider = gtk::CssProvider::new();
+        match provider.load_from_data(res::STYLE_AVATAR) {
+            Ok(_) => {
+                style_context.add_provider(&provider, gtk::STYLE_PROVIDER_PRIORITY_APPLICATION)
+            }
+            Err(err) => eprintln!("error loading style provider for list: {}", err),
+        }
+    }
 
     let mut hasher = DefaultHasher::new();
     name.hash(&mut hasher);

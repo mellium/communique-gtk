@@ -11,6 +11,7 @@ pub const SUGGESTED_PASSWORD_LEN: f64 = 16.0;
 
 pub const SVG_LOGO: &[u8] = include_bytes!("../../img/logo_concept_4_plain.svg");
 
-pub const STYLE_MAIN: &[u8] = include_bytes!("../../style/main.css");
-pub const STYLE_LIST: &[u8] = include_bytes!("../../style/list.css");
+pub const STYLE_AVATAR: &[u8] = include_bytes!("../../style/avatar.css");
 pub const STYLE_CONVERSATIONS: &[u8] = include_bytes!("../../style/conversations.css");
+pub const STYLE_LIST: &[u8] = include_bytes!("../../style/list.css");
+pub const STYLE_MAIN: &[u8] = include_bytes!("../../style/main.css");

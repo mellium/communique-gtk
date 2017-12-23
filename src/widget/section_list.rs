@@ -31,14 +31,26 @@ impl<'a> SectionList<'a> {
         let window = gtk::ScrolledWindow::new(None, None);
         window.add(&view);
         let store = gtk::ListStore::new(&[String::static_type()]);
-        let tree = gtk::TreeView::new_with_model(&store);
-        tree.set_headers_visible(false);
-        let column = gtk::TreeViewColumn::new();
-        let cell = gtk::CellRendererText::new();
-        cell.set_property_weight(600);
-        column.pack_start(&cell, true);
-        column.add_attribute(&cell, "text", 0);
-        tree.append_column(&column);
+        let tree = {
+            let tree = gtk::TreeView::new_with_model(&store);
+            if let Some(style_context) = tree.get_style_context() {
+                let provider = gtk::CssProvider::new();
+                match provider.load_from_data(res::STYLE_LIST) {
+                    Ok(_) => style_context
+                        .add_provider(&provider, gtk::STYLE_PROVIDER_PRIORITY_APPLICATION),
+                    Err(err) => eprintln!("error loading style provider for tree: {}", err),
+                }
+            }
+            tree.set_headers_visible(false);
+            let column = gtk::TreeViewColumn::new();
+            let cell = gtk::CellRendererText::new();
+            cell.set_property_weight(600);
+            column.pack_start(&cell, true);
+            column.add_attribute(&cell, "text", 0);
+            tree.append_column(&column);
+
+            tree
+        };
 
         return SectionList {
             list: tree,
