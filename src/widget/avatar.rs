@@ -18,7 +18,7 @@ const KR: f64 = 0.299;
 const KG: f64 = 0.587;
 const KB: f64 = 0.114;
 const Y: f64 = 0.731;
-const BLEND_FACTOR: f64 = 0.2;
+const BLEND_FACTOR: f64 = 0.4;
 
 pub fn avatar<'a, P: Into<Option<&'a gdk_pixbuf::Pixbuf>>>(name: &str, avatar: P) -> gtk::Box {
     let vbox = gtk::Box::new(gtk::Orientation::Vertical, 12);
@@ -59,21 +59,22 @@ pub fn avatar<'a, P: Into<Option<&'a gdk_pixbuf::Pixbuf>>>(name: &str, avatar: P
             .unwrap_or_default()
             .to_owned();
         drawing.connect_draw(move |widget, ctx| {
-            // If we can get a style_context, blend the color with the background.
-            let (rb, bb, gb) = match widget.get_style_context() {
-                Some(style_context) => {
-                    let bg = style_context.get_background_color(style_context.get_state());
-                    let r = BLEND_FACTOR * (1.0 - bg.red) + (1.0 - BLEND_FACTOR) * r;
-                    let b = BLEND_FACTOR * (1.0 - bg.blue) + (1.0 - BLEND_FACTOR) * b;
-                    let g = BLEND_FACTOR * (1.0 - bg.green) + (1.0 - BLEND_FACTOR) * g;
-                    (r, b, g)
-                }
-                None => (r, b, g),
-            };
+            // If we can get a style_context, blend the color with the background color.
             let (width, height) = (widget.get_allocated_width(), widget.get_allocated_height());
-            ctx.set_source_rgb(rb, gb, bb);
             let size = f64::from(width.min(height));
             let half = size / 2.0;
+            match widget.get_style_context() {
+                Some(style_context) => gtk::render_background(
+                    &style_context,
+                    &ctx,
+                    f64::from(width) / 2.0 - half,
+                    f64::from(height) / 2.0 - half,
+                    size,
+                    size,
+                ),
+                None => {}
+            };
+            ctx.set_source_rgba(r, g, b, 1.0 - BLEND_FACTOR);
             ctx.rectangle(
                 f64::from(width) / 2.0 - half,
                 f64::from(height) / 2.0 - half,
