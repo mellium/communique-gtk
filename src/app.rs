@@ -6,6 +6,7 @@ use ui;
 
 use gdk;
 use gdk::DisplayExt;
+use gdk_pixbuf::PixbufLoaderExt;
 
 use gio;
 use gio::ActionMapExt;
@@ -95,7 +96,7 @@ impl App {
         me.app.connect_activate(clone!(config => move |app| {
             let window = gtk::ApplicationWindow::new(app);
             let logoloader = gdk_pixbuf::PixbufLoader::new();
-            logoloader.loader_write(res::SVG_LOGO).unwrap();
+            logoloader.write(res::SVG_LOGO).unwrap();
             logoloader.close().unwrap();
             let logobuf = logoloader.get_pixbuf().unwrap();
 
