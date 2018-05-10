@@ -1,5 +1,5 @@
-use std::collections::HashMap;
 use gtk;
+use std::collections::HashMap;
 
 lazy_static! {
     pub static ref LANG: String = gtk::get_default_language().unwrap_or_default().to_string();

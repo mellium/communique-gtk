@@ -14,7 +14,8 @@ use res;
 pub struct Config {
     pub theme: Option<String>,
 
-    #[serde(rename = "account", default)] pub accounts: Vec<Account>,
+    #[serde(rename = "account", default)]
+    pub accounts: Vec<Account>,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
@@ -46,9 +47,9 @@ impl From<toml::de::Error> for InnerError {
 
 impl fmt::Display for InnerError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        match *self {
-            InnerError::De(ref err) => err.fmt(f),
-            InnerError::Io(ref err) => err.fmt(f),
+        match self {
+            InnerError::De(err) => err.fmt(f),
+            InnerError::Io(err) => err.fmt(f),
         }
     }
 }

@@ -43,8 +43,8 @@ mod res;
 mod ui;
 mod widget;
 
-use std::process;
 use std::env::args;
+use std::process;
 
 // This is the main entrypoint for the program. It should handle anything that needs to happen
 // before GTK takes over, for instance, OS signals, dealing with command line args, and exiting the
