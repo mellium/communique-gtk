@@ -10,11 +10,11 @@ readme = "README.md"
 keywords = ["chat", "xmpp", "jabber"]
 
 [dependencies]
-cairo-rs = "0.4"
-gdk = "0.8"
-gdk-pixbuf = "0.4"
-gio = "0.4"
-glib = "0.5"
+cairo-rs = "0.5"
+gdk = "0.9"
+gdk-pixbuf = "0.5"
+gio = "0.5"
+glib = "0.6"
 lazy_static = "1.1"
 regex = "1.0"
 serde = "1.0"
@@ -23,5 +23,5 @@ toml = "0.4"
 unicode-segmentation = "1.2"
 
 [dependencies.gtk]
-version = "0.4"
+version = "0.5"
 features = ["v3_16"]

@@ -4,7 +4,7 @@ use gtk::CellLayoutExt;
 use gtk::CellRendererTextExt;
 use gtk::ContainerExt;
 use gtk::CssProviderExt;
-use gtk::ListStoreExtManual;
+use gtk::GtkListStoreExtManual;
 use gtk::ScrolledWindowExt;
 use gtk::StyleContextExt;
 use gtk::TreeViewExt;
