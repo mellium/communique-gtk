@@ -1,6 +1,6 @@
 use gdk;
 use gdk_pixbuf;
-use res;
+use crate::res;
 
 use gtk;
 use gtk::AboutDialogExt;

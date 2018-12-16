@@ -1,5 +1,5 @@
 use gio;
-use res;
+use crate::res;
 
 use gtk;
 use gtk::ActionableExt;

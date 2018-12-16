@@ -1,6 +1,7 @@
 [package]
 name = "communiqué"
 version = "0.1.0"
+edition = "2018"
 authors = ["Sam Whited <sam@samwhited.com>"]
 license = "BSD-2-Clause"
 description = "A modern XMPP client with a GTK3+ UI."

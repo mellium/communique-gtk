@@ -5,7 +5,7 @@ use gtk::FrameExt;
 use gtk::PanedExt;
 use gtk::WidgetExt;
 
-use widget;
+use crate::widget;
 
 /// A widget that shows a list of the users contacts (the "roster").
 pub struct Roster {

@@ -10,8 +10,8 @@ use gtk::WidgetExt;
 
 use gdk_pixbuf;
 use regex::Regex;
-use res;
-use widget;
+use crate::res;
+use crate::widget;
 
 /// The Login widget provides a username and password text entry as well as register and login
 /// buttons.

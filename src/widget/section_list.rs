@@ -12,7 +12,7 @@ use gtk::WidgetExt;
 
 use glib::StaticType;
 
-use res;
+use crate::res;
 
 /// A `SectionList` is is a container that can contain section headings that can be navigated to
 /// and displayed and which may have other widgets inside of them.

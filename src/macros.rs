@@ -21,7 +21,7 @@ macro_rules! clone {
 macro_rules! translate(
     ( $key:expr ) => {
         {
-            use ::res::strings::{LANG, STRINGS};
+            use crate::res::strings::{LANG, STRINGS};
             match STRINGS.get(LANG.as_str()).unwrap_or(&STRINGS["en-us"]).get($key) {
                 None => &STRINGS["en-us"][$key],
                 Some(s) => *s,

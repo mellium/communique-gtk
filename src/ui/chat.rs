@@ -3,7 +3,7 @@ use gtk::StackExt;
 use gtk::StackSwitcherExt;
 use gtk::WidgetExt;
 
-use ui::roster::Roster;
+use crate::ui::roster::Roster;
 
 /// The main chat and roster view.
 pub struct Chat {

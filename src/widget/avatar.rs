@@ -12,7 +12,7 @@ use std::collections::hash_map::DefaultHasher;
 use std::f64;
 use std::hash::{Hash, Hasher};
 
-use res;
+use crate::res;
 
 const KR: f64 = 0.299;
 const KG: f64 = 0.587;

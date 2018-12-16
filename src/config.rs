@@ -8,7 +8,7 @@ use std::io;
 use std::io::Read;
 use std::path;
 
-use res;
+use crate::res;
 
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
 pub struct Config {
