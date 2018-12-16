@@ -8,6 +8,8 @@ use std::io;
 use std::io::Read;
 use std::path;
 
+use dirs;
+
 use crate::res;
 
 #[derive(Serialize, Deserialize, Debug, Clone, Default)]
@@ -98,7 +100,7 @@ pub fn load_config() -> Result<Config, Error> {
     // Uses XDG_CONFIG_HOME, $HOME/.config, or "./" as the config search dir in that order
     let configdir = match env::var_os("XDG_CONFIG_HOME") {
         Some(s) => s,
-        None => match env::home_dir() {
+        None => match dirs::home_dir() {
             Some(s) => {
                 let mut path = s;
                 path.push(".config");

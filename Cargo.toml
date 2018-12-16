@@ -12,6 +12,7 @@ keywords = ["chat", "xmpp", "jabber"]
 
 [dependencies]
 cairo-rs = "0.5"
+dirs = "1.0"
 gdk = "0.9"
 gdk-pixbuf = "0.5"
 gio = "0.5"
