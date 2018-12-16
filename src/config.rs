@@ -1,5 +1,3 @@
-extern crate toml;
-
 use std::env;
 use std::ffi::OsStr;
 use std::fmt;
@@ -9,6 +7,7 @@ use std::io::Read;
 use std::path;
 
 use dirs;
+use serde_derive::{Serialize, Deserialize};
 
 use crate::res;
 

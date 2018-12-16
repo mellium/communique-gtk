@@ -19,22 +19,6 @@
        html_favicon_url = "https://www.rust-lang.org/favicon.ico", html_root_url = "/")]
 
 #[macro_use]
-extern crate lazy_static;
-
-#[macro_use]
-extern crate serde_derive;
-
-extern crate cairo;
-extern crate gdk;
-extern crate gdk_pixbuf;
-extern crate gio;
-extern crate glib;
-extern crate gtk;
-extern crate regex;
-extern crate toml;
-extern crate unicode_segmentation;
-
-#[macro_use]
 mod macros;
 
 mod app;
