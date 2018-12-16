@@ -47,7 +47,7 @@ impl From<toml::de::Error> for InnerError {
 }
 
 impl fmt::Display for InnerError {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             InnerError::De(err) => err.fmt(f),
             InnerError::Io(err) => err.fmt(f),
@@ -82,7 +82,7 @@ impl From<toml::de::Error> for Error {
 }
 
 impl fmt::Display for Error {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self.path {
             None => write!(f, "Error parsing config: `{:?}'", self.inner),
             Some(ref path) => write!(
