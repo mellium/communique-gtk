@@ -11,8 +11,6 @@ use gtk::WidgetExt;
 use crate::res;
 use crate::widget;
 use gdk_pixbuf;
-use lazy_static::lazy_static;
-use regex::Regex;
 
 /// The Login widget provides a username and password text entry as well as register and login
 /// buttons.
@@ -40,37 +38,8 @@ impl Login {
         entry_box.set_can_focus(false);
         center_box.add(&entry_box);
 
-        let jid_entry = gtk::Entry::new();
-        jid_entry.set_placeholder_text(format!("{}@example.com", translate!("user")).as_str());
-        jid_entry.set_input_purpose(gtk::InputPurpose::Email);
-        jid_entry.set_activates_default(true);
+        let jid_entry = widget::jid_entry();
         entry_box.add(&jid_entry);
-
-        // TODO: Write a PRECIS implementation and do proper validation.
-        //       This is just to test the input field really.
-        lazy_static! {
-            static ref RE: Regex = Regex::new(r"[^@/]+@[^@/]+(/.+)?").unwrap();
-        }
-
-        // Setup basic (non-binding) validation of the JID entry field.
-        jid_entry.connect_changed(|entry| match entry.get_text() {
-            None => {
-                entry.set_icon_from_icon_name(
-                    gtk::EntryIconPosition::Secondary,
-                    "dialog-warning-symbolic",
-                );
-            }
-            Some(text) => {
-                if RE.is_match(&text) {
-                    entry.set_icon_from_icon_name(gtk::EntryIconPosition::Secondary, None);
-                } else {
-                    entry.set_icon_from_icon_name(
-                        gtk::EntryIconPosition::Secondary,
-                        Some("dialog-warning-symbolic"),
-                    );
-                }
-            }
-        });
 
         let pass_entry = widget::pass_entry();
         entry_box.add(&pass_entry);
