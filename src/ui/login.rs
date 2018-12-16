@@ -1,3 +1,4 @@
+use gdk_pixbuf;
 use gtk;
 use gtk::ActionableExt;
 use gtk::BoxExt;
@@ -10,7 +11,6 @@ use gtk::WidgetExt;
 
 use crate::res;
 use crate::widget;
-use gdk_pixbuf;
 
 /// The Login widget provides a username and password text entry as well as register and login
 /// buttons.
@@ -38,7 +38,15 @@ impl Login {
         entry_box.set_can_focus(false);
         center_box.add(&entry_box);
 
-        let jid_entry = widget::jid_entry();
+        let connect = gtk::Button::new_with_label(translate!("Connect"));
+        connect.set_action_name("app.login");
+        connect.set_can_default(true);
+        if let Some(c) = connect.get_style_context() {
+            c.add_class("suggested-action");
+        }
+
+        let entry_conn_button = connect.clone();
+        let jid_entry = widget::jid_entry(move |_, ok| entry_conn_button.set_sensitive(ok));
         entry_box.add(&jid_entry);
 
         let pass_entry = widget::pass_entry();
@@ -55,13 +63,6 @@ impl Login {
         let button_box = gtk::Box::new(gtk::Orientation::Horizontal, 15);
         button_box.set_can_focus(false);
         center_box.add(&button_box);
-
-        let connect = gtk::Button::new_with_label(translate!("Connect"));
-        connect.set_action_name("app.login");
-        connect.set_can_default(true);
-        if let Some(c) = connect.get_style_context() {
-            c.add_class("suggested-action");
-        }
 
         let register = gtk::Button::new_with_label(translate!("Register"));
         register.set_sensitive(false);

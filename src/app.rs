@@ -1,8 +1,8 @@
 use crate::config;
-use gdk_pixbuf;
-use glib;
 use crate::res;
 use crate::ui;
+use gdk_pixbuf;
+use glib;
 
 use gdk;
 use gdk::DisplayExt;
